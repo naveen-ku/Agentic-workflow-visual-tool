@@ -11,7 +11,7 @@ export class ProductSearchWorkflow implements IWorkflow {
   private productsData: any[];
 
   constructor() {
-    this.openai = new OpenAIService();
+    this.openai = OpenAIService.getInstance();
     const productsPath = path.join(__dirname, "../data/products.json");
     this.productsData = JSON.parse(fs.readFileSync(productsPath, "utf-8"));
   }

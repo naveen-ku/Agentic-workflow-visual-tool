@@ -9,7 +9,7 @@ export class XRayService {
   private openai: OpenAIService;
 
   constructor() {
-    this.openai = new OpenAIService();
+    this.openai = OpenAIService.getInstance();
   }
 
   async run(userInput: string): Promise<string> {

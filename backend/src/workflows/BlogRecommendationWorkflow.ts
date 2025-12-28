@@ -11,7 +11,7 @@ export class BlogRecommendationWorkflow implements IWorkflow {
   private blogsData: any[];
 
   constructor() {
-    this.openai = new OpenAIService();
+    this.openai = OpenAIService.getInstance();
     const blogsPath = path.join(__dirname, "../data/blogs.json");
     this.blogsData = JSON.parse(fs.readFileSync(blogsPath, "utf-8"));
   }

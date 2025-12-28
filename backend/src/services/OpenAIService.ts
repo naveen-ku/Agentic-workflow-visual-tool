@@ -1,9 +1,10 @@
 import OpenAI from "openai";
 
 export class OpenAIService {
+  private static instance: OpenAIService;
   private openai: OpenAI;
 
-  constructor() {
+  private constructor() {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       console.warn("OPENAI_API_KEY is not set. OpenAI calls will fail.");
@@ -11,6 +12,13 @@ export class OpenAIService {
     this.openai = new OpenAI({
       apiKey: apiKey,
     });
+  }
+
+  public static getInstance(): OpenAIService {
+    if (!OpenAIService.instance) {
+      OpenAIService.instance = new OpenAIService();
+    }
+    return OpenAIService.instance;
   }
 
   async generate(
