@@ -25,6 +25,7 @@ router.post("/", async (req, res) => {
 
   // Blocking execution as per user request for simplicity
   try {
+    console.info("[exeution] userInput... ", userInput);
     const executionId = await xrayService.run(userInput);
     res.json({ executionId, status: "completed" });
   } catch (err: any) {
