@@ -15,7 +15,7 @@ export class OpenAIService {
 
   async generate(
     prompt: string,
-    model: string = "gpt-oss-120b"
+    model: string = "gpt-4-turbo"
   ): Promise<string> {
     try {
       const response = await this.openai.chat.completions.create({
@@ -31,7 +31,7 @@ export class OpenAIService {
 
   async generateJson<T>(
     prompt: string,
-    model: string = "gpt-oss-120b"
+    model: string = "gpt-4-turbo"
   ): Promise<T> {
     try {
       const response = await this.openai.chat.completions.create({
