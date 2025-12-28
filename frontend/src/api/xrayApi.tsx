@@ -14,3 +14,15 @@ export async function fetchExecutionById(
   const res = await fetch(`${BASE_URL}/executions/${id}`)
   return res.json()
 }
+
+export async function createExecution(userInput: string): Promise<{ executionId: string }> {
+  const res = await fetch(`${BASE_URL}/executions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userInput }),
+  })
+  if (!res.ok) {
+    throw new Error("Failed to create execution");
+  }
+  return res.json()
+}

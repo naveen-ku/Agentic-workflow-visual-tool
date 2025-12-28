@@ -27,6 +27,17 @@ export const loadExecutionById = createAsyncThunk(
   fetchExecutionById
 )
 
+export const startNewExecution = createAsyncThunk(
+  "executions/startNew",
+  async (userInput: string, { dispatch }) => {
+    const { createExecution } = await import("../api/xrayApi");
+    const result = await createExecution(userInput);
+    dispatch(loadExecutions()); // Refresh list
+    dispatch(loadExecutionById(result.executionId)); // Select new one
+    return result;
+  }
+);
+
 const executionSlice = createSlice({
   name: "executions",
   initialState,
