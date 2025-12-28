@@ -35,3 +35,9 @@ npm run dev
 
 - `backend/`: Express server code
 - `frontend/`: React application code
+
+
+### Run the demo
+```bash
+npx ts-node src/demo/demo.ts
+```
