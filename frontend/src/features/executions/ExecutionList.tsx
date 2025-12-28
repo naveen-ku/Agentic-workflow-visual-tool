@@ -1,4 +1,5 @@
 import type { Execution } from "../../types/xray";
+import { UI_LABELS } from "../../constants/ui";
 
 interface Props {
   executions: Execution[];
@@ -28,7 +29,7 @@ export function ExecutionList({ executions, selectedId, onSelect }: Props) {
           </div>
           {!exec.endedAt && (
             <div className="mt-1 text-xs text-blue-600 font-semibold animate-pulse">
-              In Progress...
+              {UI_LABELS.STATUS_IN_PROGRESS}
             </div>
           )}
         </div>

@@ -1,3 +1,4 @@
+import { UI_LABELS } from "../../constants/ui";
 import type { Artifact, Evaluation } from "../../types/xray";
 
 interface Props {
@@ -12,9 +13,9 @@ export function ArtifactTable({ artifacts, evaluations }: Props) {
     <table className="w-full text-sm border">
       <thead className="bg-gray-100">
         <tr>
-          <th className="p-2 text-left">Artifact</th>
-          <th className="p-2">Status</th>
-          <th className="p-2 text-left">Details</th>
+          <th className="p-2 text-left">{UI_LABELS.TABLE_HEADER_ARTIFACT}</th>
+          <th className="p-2">{UI_LABELS.TABLE_HEADER_STATUS}</th>
+          <th className="p-2 text-left">{UI_LABELS.TABLE_HEADER_DETAILS}</th>
         </tr>
       </thead>
 
@@ -36,7 +37,11 @@ export function ArtifactTable({ artifacts, evaluations }: Props) {
                     : "text-gray-500"
                 }`}
               >
-                {hasEvaluation ? (passed ? "PASS" : "FAIL") : "INFO"}
+                {hasEvaluation
+                  ? passed
+                    ? UI_LABELS.STATUS_PASS
+                    : UI_LABELS.STATUS_FAIL
+                  : UI_LABELS.STATUS_INFO}
               </td>
               <td className="p-2">
                 {/* Show evaluation details if present */}

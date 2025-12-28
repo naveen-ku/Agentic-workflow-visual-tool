@@ -2,6 +2,7 @@ import { XRay } from "../core/XRay";
 import { OpenAIService } from "./OpenAIService";
 import fs from "fs";
 import path from "path";
+import { PROMPTS, STEP_NAMES, ARTIFACT_LABELS, CRITERIA } from "../constants";
 
 export class XRayService {
   private openai: OpenAIService;
@@ -32,48 +33,48 @@ export class XRayService {
 
   private async processExecution(xray: XRay, userInput: string) {
     try {
+      // ... inside processExecution ...
+
       // 1. Generation Step
-      const genStep = xray.startStep("Generate Search Keywords", "generation", {
+      const genStep = xray.startStep(STEP_NAMES.GENERATION, "generation", {
         userInput,
       });
 
-      const genPrompt = `
-        User Request: "${userInput}"
-        Task: Extract key search terms for searching a product database.
-        Output JSON: { "keywords": ["term1", "term2"], "reasoning": "explanation" }
-      `;
+      const genPrompt = PROMPTS.GENERATION(userInput);
 
       const genResult = await this.openai.generateJson<{
         keywords: string[];
         reasoning: string;
       }>(genPrompt);
 
-      genStep.addArtifact("Prompt Analysis", {
+      genStep.addArtifact(ARTIFACT_LABELS.PROMPT_ANALYSIS, {
         derivedKeywords: genResult.keywords.join(", "),
       });
       genStep.setReasoning(genResult.reasoning);
       genStep.setOutput({ keywords: genResult.keywords });
       xray.endStep(genStep);
-      xray.saveState(); // Update store after step
+      xray.saveState();
 
       // 2. Search Step
-      const searchStep = xray.startStep("Search Database", "search", {
+      const searchStep = xray.startStep(STEP_NAMES.SEARCH, "search", {
         keywords: genResult.keywords,
       });
 
       const searchResults = this.performSearch(genResult.keywords);
 
-      const searchArtifact = searchStep.addArtifact("Raw Search Results", {
-        count: searchResults.length,
-      });
+      const searchArtifact = searchStep.addArtifact(
+        ARTIFACT_LABELS.RAW_SEARCH_RESULTS,
+        {
+          count: searchResults.length,
+        }
+      );
       searchStep.evaluateArtifact(searchArtifact, [
         {
-          criterion: "Database Hit",
+          criterion: CRITERIA.DATABASE_HIT,
           passed: searchResults.length > 0,
           detail: `Found ${searchResults.length} products matching keywords.`,
         },
       ]);
-
       searchStep.setOutput({ results: searchResults });
       searchStep.setReasoning(
         `Found ${
@@ -89,18 +90,11 @@ export class XRayService {
       }
 
       // 3. Filter Step
-      const filterStep = xray.startStep(
-        "Apply Intelligent Filters",
-        "apply_filter",
-        { itemCount: searchResults.length }
-      );
+      const filterStep = xray.startStep(STEP_NAMES.FILTER, "apply_filter", {
+        itemCount: searchResults.length,
+      });
 
-      const filterPrompt = `
-        User Request: "${userInput}"
-        Items found: ${searchResults.length}
-        Task: Define 1-2 strict filter criteria values if applicable (e.g., maxPrice, minRating, material).
-        Output JSON: { "maxPrice": number | null, "minRating": number | null, "requiredMaterial": string | null, "reasoning": "..." }
-      `;
+      const filterPrompt = PROMPTS.FILTER(userInput, searchResults.length);
 
       const filterCriteria = await this.openai.generateJson<{
         maxPrice?: number;
@@ -123,18 +117,21 @@ export class XRayService {
       });
 
       const droppedCount = searchResults.length - filteredResults.length;
-      const filterArtifactId = filterStep.addArtifact("Filter Logic", {
-        criteria: JSON.stringify(filterCriteria),
-        message:
-          droppedCount > 0
-            ? `Excluded ${droppedCount} items`
-            : "No items excluded (criteria matched all)",
-        dropped: droppedCount,
-      });
+      const filterArtifactId = filterStep.addArtifact(
+        ARTIFACT_LABELS.FILTER_LOGIC,
+        {
+          criteria: JSON.stringify(filterCriteria),
+          message:
+            droppedCount > 0
+              ? `Excluded ${droppedCount} items`
+              : "No items excluded (criteria matched all)",
+          dropped: droppedCount,
+        }
+      );
 
       filterStep.evaluateArtifact(filterArtifactId, [
         {
-          criterion: "Filter Applied",
+          criterion: CRITERIA.FILTER_APPLIED,
           passed: true,
           detail:
             droppedCount > 0
@@ -148,15 +145,17 @@ export class XRayService {
       filterStep.setReasoning(filterCriteria.reasoning);
       let itemsForRelevance = filteredResults;
       if (filteredResults.length === 0) {
-        // Fallback: If filter is too strict, use original search results to keep the demo fun
         itemsForRelevance = searchResults;
-        const warningArtifact = filterStep.addArtifact("Filter Check", {
-          warning:
-            "Filter removed all items. Reverting to original search results to continue analysis.",
-        });
+        const warningArtifact = filterStep.addArtifact(
+          ARTIFACT_LABELS.FILTER_CHECK,
+          {
+            warning:
+              "Filter removed all items. Reverting to original search results to continue analysis.",
+          }
+        );
         filterStep.evaluateArtifact(warningArtifact, [
           {
-            criterion: "Data Availability",
+            criterion: CRITERIA.DATA_AVAILABILITY,
             passed: false,
             detail:
               "Filter was too strict, 0 items remained. Fallback enabled.",
@@ -177,21 +176,14 @@ export class XRayService {
 
       // 4. Relevance Step
       const evalStep = xray.startStep(
-        "Semantic Relevance Check",
+        STEP_NAMES.RELEVANCE,
         "llm_relevance_evaluation",
         { itemCount: itemsForRelevance.length }
       );
 
       const scoredItems = [];
       for (const item of itemsForRelevance) {
-        const evalPrompt = `
-            User Request: "${userInput}"
-            Product: ${item.title} (${item.category}) - ${
-          item.description || ""
-        }
-            Task: Rate relevance from 0.0 to 1.0 and give 1 sentence reasoning.
-            Output JSON: { "score": number, "reasoning": "string" }
-        `;
+        const evalPrompt = PROMPTS.EVALUATION(userInput, item);
         const evalRes = await this.openai.generateJson<{
           score: number;
           reasoning: string;
@@ -204,7 +196,7 @@ export class XRayService {
       }
 
       evalStep.addArtifact(
-        "Relevance Scores",
+        ARTIFACT_LABELS.RELEVANCE_SCORES,
         scoredItems.map((s) => ({ title: s.title, score: s.relevanceScore }))
       );
       evalStep.setOutput({ scoredItems });
@@ -212,7 +204,7 @@ export class XRayService {
       xray.saveState();
 
       // 5. Ranking Step
-      const rankStep = xray.startStep("Final Ranking", "ranking", {
+      const rankStep = xray.startStep(STEP_NAMES.RANKING, "ranking", {
         strategy: "AI Relevance Score",
       });
 
@@ -220,20 +212,19 @@ export class XRayService {
         (a, b) => b.relevanceScore - a.relevanceScore
       );
 
-      rankStep.addArtifact("Top Pick", rankedItems[0]);
+      rankStep.addArtifact(ARTIFACT_LABELS.TOP_PICK, rankedItems[0]);
       rankStep.setOutput({ rankedItems });
       xray.endStep(rankStep);
       xray.saveState();
     } catch (e: any) {
       console.error("XRay Execution Failed", e);
-      // Create a failure step to show in UI
-      const errorStep = xray.startStep("Execution Failed", "custom", {
+      const errorStep = xray.startStep(STEP_NAMES.FAILURE, "custom", {
         error: e.message,
       });
       errorStep.setReasoning("An internal error occurred during processing.");
-      errorStep.evaluateArtifact("Error Details", [
+      errorStep.evaluateArtifact(ARTIFACT_LABELS.ERROR_DETAILS, [
         {
-          criterion: "Execution Success",
+          criterion: CRITERIA.EXECUTION_SUCCESS,
           passed: false,
           detail: e.message || String(e),
         },

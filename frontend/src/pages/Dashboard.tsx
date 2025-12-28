@@ -8,6 +8,7 @@ import {
 import { ExecutionList } from "../features/executions/ExecutionList";
 import { ExecutionDetail } from "../features/executions/ExecutionDetail";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import { UI_LABELS } from "../constants/ui";
 
 export function Dashboard() {
   const dispatch = useAppDispatch();
@@ -37,8 +38,10 @@ export function Dashboard() {
     }
   };
 
+  // ... inside Dashboard ...
+
   if (loading && executions.length === 0) {
-    return <div className="p-4">Loading...</div>;
+    return <div className="p-4">{UI_LABELS.LOADING_MESSAGE}</div>;
   }
 
   return (
@@ -48,7 +51,7 @@ export function Dashboard() {
           <input
             type="text"
             className="flex-1 border rounded px-3 py-2 text-sm"
-            placeholder="Describe what you want to research (e.g., 'Best lightweight running shoes under $100')"
+            placeholder={UI_LABELS.INPUT_PLACEHOLDER}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isSubmitting}
@@ -58,7 +61,7 @@ export function Dashboard() {
             disabled={isSubmitting}
             className="bg-blue-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
           >
-            {isSubmitting ? "Thinking..." : "Start X-Ray"}
+            {isSubmitting ? UI_LABELS.THINKING_BUTTON : UI_LABELS.START_BUTTON}
           </button>
         </form>
       </div>
@@ -73,7 +76,7 @@ export function Dashboard() {
           <ExecutionDetail key={selected.executionId} execution={selected} />
         ) : (
           <div className="flex-1 p-8 text-gray-400 flex items-center justify-center">
-            Select an execution or start a new one
+            {UI_LABELS.NO_EXECUTIONS_MESSAGE}
           </div>
         )}
       </div>

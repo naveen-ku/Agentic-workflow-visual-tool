@@ -1,0 +1,19 @@
+export const UI_LABELS = {
+  START_BUTTON: "Start X-Ray",
+  THINKING_BUTTON: "Thinking...",
+  INPUT_PLACEHOLDER:
+    "Describe what you want to research (e.g., 'Best lightweight running shoes under $100')",
+  NO_EXECUTIONS_MESSAGE: "Select an execution or start a new one",
+  LOADING_MESSAGE: "Loading...",
+  STATUS_IN_PROGRESS: "In Progress...",
+  STATUS_PASS: "PASS",
+  STATUS_FAIL: "FAIL",
+  STATUS_INFO: "INFO",
+  SECTION_INPUT: "Input",
+  SECTION_ARTIFACTS: "Artifacts",
+  SECTION_OUTPUT: "Output",
+  SECTION_REASONING: "Reasoning",
+  TABLE_HEADER_ARTIFACT: "Artifact",
+  TABLE_HEADER_STATUS: "Status",
+  TABLE_HEADER_DETAILS: "Details",
+};
