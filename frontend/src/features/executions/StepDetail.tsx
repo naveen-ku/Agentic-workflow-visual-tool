@@ -1,6 +1,7 @@
 import type { Step } from "../../types/xray";
 import { ArtifactTable } from "./ArtifactTable";
 import { UI_LABELS } from "../../constants/ui";
+import { Section } from "../../components/Section";
 
 /**
  * Renders the details of a single execution step.
@@ -39,21 +40,6 @@ export function StepDetail({ step }: { step: Step }) {
           <p className="text-sm text-gray-700">{step.reasoning}</p>
         </Section>
       )}
-    </div>
-  );
-}
-
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="mb-6">
-      <h3 className="font-medium mb-2 text-gray-700">{title}</h3>
-      {children}
     </div>
   );
 }
