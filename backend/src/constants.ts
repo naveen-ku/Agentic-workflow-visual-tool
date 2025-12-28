@@ -37,6 +37,7 @@ export const ARTIFACT_LABELS = {
   RELEVANCE_SCORES: "Relevance Scores",
   TOP_PICK: "Top Pick",
   ERROR_DETAILS: "Error Details",
+  CANDIDATE_EVALUATIONS: "Candidate Evaluations",
 };
 
 export const CRITERIA = {

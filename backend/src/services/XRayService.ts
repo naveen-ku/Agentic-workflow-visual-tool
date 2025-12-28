@@ -103,18 +103,58 @@ export class XRayService {
         reasoning: string;
       }>(filterPrompt);
 
-      const filteredResults = searchResults.filter((p) => {
-        if (filterCriteria.maxPrice && p.price > filterCriteria.maxPrice)
-          return false;
-        if (filterCriteria.minRating && p.rating < filterCriteria.minRating)
-          return false;
-        if (
-          filterCriteria.requiredMaterial &&
-          p.material !== filterCriteria.requiredMaterial
-        )
-          return false;
-        return true;
+      const candidateEvaluations = searchResults.map((p) => {
+        const rules = {
+          price: {
+            passed:
+              !filterCriteria.maxPrice || p.price <= filterCriteria.maxPrice,
+            detail: filterCriteria.maxPrice
+              ? `${p.price} ${
+                  p.price <= filterCriteria.maxPrice ? "<=" : ">"
+                } ${filterCriteria.maxPrice}`
+              : "N/A",
+          },
+          rating: {
+            passed:
+              !filterCriteria.minRating || p.rating >= filterCriteria.minRating,
+            detail: filterCriteria.minRating
+              ? `${p.rating} ${
+                  p.rating >= filterCriteria.minRating ? ">=" : "<"
+                } ${filterCriteria.minRating}`
+              : "N/A",
+          },
+          material: {
+            passed:
+              !filterCriteria.requiredMaterial ||
+              p.material === filterCriteria.requiredMaterial,
+            detail: filterCriteria.requiredMaterial
+              ? `${p.material} ${
+                  p.material === filterCriteria.requiredMaterial ? "==" : "!="
+                } ${filterCriteria.requiredMaterial}`
+              : "N/A",
+          },
+        };
+
+        const qualified = Object.values(rules).every((r) => r.passed);
+        return {
+          item: `${p.title} (${p.brand})`,
+          price: p.price,
+          rating: p.rating,
+          material: p.material,
+          rules,
+          qualified,
+          originalItem: p,
+        };
       });
+
+      const filteredResults = candidateEvaluations
+        .filter((c) => c.qualified)
+        .map((c) => c.originalItem);
+
+      filterStep.addArtifact(
+        ARTIFACT_LABELS.CANDIDATE_EVALUATIONS,
+        candidateEvaluations
+      );
 
       const droppedCount = searchResults.length - filteredResults.length;
       const filterArtifactId = filterStep.addArtifact(
@@ -135,9 +175,7 @@ export class XRayService {
           passed: true,
           detail:
             droppedCount > 0
-              ? `Dropped ${droppedCount} items based on ${JSON.stringify(
-                  filterCriteria
-                )}`
+              ? `Dropped ${droppedCount} items based on detailed rules (see Candidate Evaluations).`
               : "No items dropped. Search results matched criteria.",
         },
       ]);

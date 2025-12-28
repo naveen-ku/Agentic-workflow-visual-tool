@@ -21,6 +21,84 @@ export function ArtifactTable({ artifacts, evaluations }: Props) {
 
       <tbody>
         {artifacts.map((a) => {
+          // Special handling for detailed candidate evaluations
+          if (a.label === UI_LABELS.CANDIDATE_EVALUATIONS_LABEL) {
+            const data = a.data as any[];
+            return (
+              <tr key={a.artifactId} className="border-t">
+                <td className="p-2 font-medium" colSpan={3}>
+                  <div className="mb-2 font-semibold text-gray-700">
+                    {a.label}
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs border bg-white">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="p-2 text-left border">Candidate</th>
+                          <th className="p-2 text-center border">Price</th>
+                          <th className="p-2 text-center border">Rating</th>
+                          <th className="p-2 text-center border">Material</th>
+                          <th className="p-2 text-center border">Result</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.map((item: any, idx: number) => (
+                          <tr key={idx} className="border-t">
+                            <td className="p-2 border font-medium">
+                              {item.item}
+                            </td>
+                            <td
+                              className={`p-2 border text-center ${
+                                item.rules.price.passed
+                                  ? "text-green-600"
+                                  : "text-red-600 bg-red-50"
+                              }`}
+                              title={item.rules.price.detail}
+                            >
+                              {item.price}
+                              {!item.rules.price.passed && "*"}
+                            </td>
+                            <td
+                              className={`p-2 border text-center ${
+                                item.rules.rating.passed
+                                  ? "text-green-600"
+                                  : "text-red-600 bg-red-50"
+                              }`}
+                              title={item.rules.rating.detail}
+                            >
+                              {item.rating}
+                              {!item.rules.rating.passed && "*"}
+                            </td>
+                            <td
+                              className={`p-2 border text-center ${
+                                item.rules.material.passed
+                                  ? "text-green-600"
+                                  : "text-red-600 bg-red-50"
+                              }`}
+                              title={item.rules.material.detail}
+                            >
+                              {item.material}
+                              {!item.rules.material.passed && "*"}
+                            </td>
+                            <td
+                              className={`p-2 border text-center font-bold ${
+                                item.qualified
+                                  ? "text-green-600"
+                                  : "text-gray-400"
+                              }`}
+                            >
+                              {item.qualified ? "QUALIFIED" : "REJECTED"}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            );
+          }
+
           const evalResult = evalMap[a.artifactId];
           const hasEvaluation = !!evalResult;
           const passed = evalResult?.qualified;
