@@ -61,32 +61,62 @@ export class BlogRecommendationWorkflow implements IWorkflow {
 
     if (searchResults.length === 0) return;
 
-    // 3. Filter (Complexity & Age)
+    // 3. Filter (Complexity)
     const filterStep = xray.startStep(STEP_NAMES.FILTER, "apply_filter", {
       count: searchResults.length,
       targetComplexity: genResult.complexity,
     });
 
-    const filteredResults = searchResults.filter((b) => {
-      if (genResult.complexity && b.difficulty_level !== genResult.complexity)
-        return false;
-      return true;
+    const candidateEvaluations = searchResults.map((b) => {
+      const isComplexityMatch =
+        !genResult.complexity || b.difficulty_level === genResult.complexity;
+
+      const rules = {
+        complexity: {
+          passed: isComplexityMatch,
+          detail: genResult.complexity
+            ? `${b.difficulty_level} ${isComplexityMatch ? "==" : "!="} ${
+                genResult.complexity
+              }`
+            : "Any",
+        },
+      };
+
+      return {
+        item: b.title,
+        complexity: b.difficulty_level,
+        views: b.metrics.views,
+        rules,
+        qualified: isComplexityMatch,
+        originalItem: b,
+      };
     });
 
+    const filteredResults = candidateEvaluations
+      .filter((c) => c.qualified)
+      .map((c) => c.originalItem);
+
+    filterStep.addArtifact(
+      ARTIFACT_LABELS.CANDIDATE_EVALUATIONS,
+      candidateEvaluations
+    );
+
+    const droppedCount = searchResults.length - filteredResults.length;
     filterStep.addArtifact(ARTIFACT_LABELS.FILTER_LOGIC, {
       complexityFilter: genResult.complexity || "None",
-      dropped: searchResults.length - filteredResults.length,
+      dropped: droppedCount,
     });
 
-    // Blog Metric Artifact
-    filterStep.addArtifact(
-      ARTIFACT_LABELS.BLOG_METRICS,
-      filteredResults.map((b) => ({
-        title: b.title,
-        views: b.metrics.views,
-        sentiment: b.recommendation_data.sentiment,
-      }))
-    );
+    filterStep.evaluateArtifact(ARTIFACT_LABELS.FILTER_LOGIC, [
+      {
+        criterion: CRITERIA.FILTER_APPLIED,
+        passed: filteredResults.length > 0,
+        detail:
+          droppedCount > 0
+            ? `Dropped ${droppedCount} blogs based on complexity.`
+            : "No blogs dropped.",
+      },
+    ]);
 
     filterStep.setOutput({ filteredResults });
     xray.endStep(filterStep);

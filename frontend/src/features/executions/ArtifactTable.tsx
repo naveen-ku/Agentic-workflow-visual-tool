@@ -24,6 +24,14 @@ export function ArtifactTable({ artifacts, evaluations }: Props) {
           // Special handling for detailed candidate evaluations
           if (a.label === UI_LABELS.CANDIDATE_EVALUATIONS_LABEL) {
             const data = a.data as any[];
+            if (!data || data.length === 0) return null;
+
+            // Dynamically extract rule keys from the first item
+            const firstItem = data[0];
+            const ruleKeys = firstItem.rules
+              ? Object.keys(firstItem.rules)
+              : [];
+
             return (
               <tr key={a.artifactId} className="border-t">
                 <td className="p-2 font-medium" colSpan={3}>
@@ -35,9 +43,14 @@ export function ArtifactTable({ artifacts, evaluations }: Props) {
                       <thead className="bg-gray-50">
                         <tr>
                           <th className="p-2 text-left border">Candidate</th>
-                          <th className="p-2 text-center border">Price</th>
-                          <th className="p-2 text-center border">Rating</th>
-                          <th className="p-2 text-center border">Material</th>
+                          {ruleKeys.map((key) => (
+                            <th
+                              key={key}
+                              className="p-2 text-center border capitalize"
+                            >
+                              {key}
+                            </th>
+                          ))}
                           <th className="p-2 text-center border">Result</th>
                         </tr>
                       </thead>
@@ -47,39 +60,28 @@ export function ArtifactTable({ artifacts, evaluations }: Props) {
                             <td className="p-2 border font-medium">
                               {item.item}
                             </td>
-                            <td
-                              className={`p-2 border text-center ${
-                                item.rules.price.passed
-                                  ? "text-green-600"
-                                  : "text-red-600 bg-red-50"
-                              }`}
-                              title={item.rules.price.detail}
-                            >
-                              {item.price}
-                              {!item.rules.price.passed && "*"}
-                            </td>
-                            <td
-                              className={`p-2 border text-center ${
-                                item.rules.rating.passed
-                                  ? "text-green-600"
-                                  : "text-red-600 bg-red-50"
-                              }`}
-                              title={item.rules.rating.detail}
-                            >
-                              {item.rating}
-                              {!item.rules.rating.passed && "*"}
-                            </td>
-                            <td
-                              className={`p-2 border text-center ${
-                                item.rules.material.passed
-                                  ? "text-green-600"
-                                  : "text-red-600 bg-red-50"
-                              }`}
-                              title={item.rules.material.detail}
-                            >
-                              {item.material}
-                              {!item.rules.material.passed && "*"}
-                            </td>
+                            {ruleKeys.map((key) => {
+                              const rule = item.rules[key];
+                              // Try to find a matching value property in the item (e.g., item.price)
+                              // If not found, just use the key logic or empty
+                              const value =
+                                item[key] !== undefined ? item[key] : "-";
+
+                              return (
+                                <td
+                                  key={key}
+                                  className={`p-2 border text-center ${
+                                    rule.passed
+                                      ? "text-green-600"
+                                      : "text-red-600 bg-red-50"
+                                  }`}
+                                  title={rule.detail}
+                                >
+                                  {value}
+                                  {!rule.passed && "*"}
+                                </td>
+                              );
+                            })}
                             <td
                               className={`p-2 border text-center font-bold ${
                                 item.qualified
@@ -88,45 +90,6 @@ export function ArtifactTable({ artifacts, evaluations }: Props) {
                               }`}
                             >
                               {item.qualified ? "QUALIFIED" : "REJECTED"}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </td>
-              </tr>
-            );
-          }
-
-          if (a.label === UI_LABELS.BLOG_METRICS_LABEL) {
-            const data = a.data as any[];
-            return (
-              <tr key={a.artifactId} className="border-t">
-                <td className="p-2 font-medium" colSpan={3}>
-                  <div className="mb-2 font-semibold text-gray-700">
-                    {a.label}
-                  </div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs border bg-white">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="p-2 text-left border">Title</th>
-                          <th className="p-2 text-right border">Views</th>
-                          <th className="p-2 text-right border">Sentiment</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.map((item: any, idx: number) => (
-                          <tr key={idx} className="border-t">
-                            <td className="p-2 border font-medium">
-                              {item.title}
-                            </td>
-                            <td className="p-2 border text-right">
-                              {item.views.toLocaleString()}
-                            </td>
-                            <td className="p-2 border text-right">
-                              {item.sentiment}
                             </td>
                           </tr>
                         ))}

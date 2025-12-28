@@ -1,11 +1,15 @@
 export const PROMPTS = {
-  GENERATION: (userInput: string) => `
-        User Request: "${userInput}"
-        Task: Extract key search terms for searching a product database.
-        Output JSON: { "keywords": ["term1", "term2"], "reasoning": "explanation" }
-      `,
-  FILTER: (userInput: string, count: number) => `
-        User Request: "${userInput}"
+  GENERATION: (input: string) =>
+    `User Request: "${input}"\nTask: Extract key search terms (keywords) and provide a reasoning for why they are relevant.\nOutput JSON: { "keywords": ["term1", "term2"], "reasoning": "..." }`,
+  ROUTER: (input: string) =>
+    `User Request: "${input}"
+    Task: Classify the user's intent into one of the following workflows:
+    - PRODUCT_SEARCH: For finding physical products, items, specs, or shopping-related queries.
+    - BLOG_RECOMMENDATION: For finding articles, reading material, tutorials, opinion pieces, or educational content.
+    
+    Output JSON: { "workflow": "PRODUCT_SEARCH" | "BLOG_RECOMMENDATION", "reasoning": "..." }`,
+  FILTER: (input: string, count: number) => `
+        User Request: "${input}"
         Items found: ${count}
         Task: Define 1-2 strict filter criteria values if applicable (e.g., maxPrice, minRating, material).
         Output JSON: { "maxPrice": number | null, "minRating": number | null, "requiredMaterial": string | null, "reasoning": "..." }

@@ -2,11 +2,19 @@ import { XRay } from "../core/XRay";
 import { IWorkflow } from "../workflows/IWorkflow";
 import { ProductSearchWorkflow } from "../workflows/ProductSearchWorkflow";
 import { BlogRecommendationWorkflow } from "../workflows/BlogRecommendationWorkflow";
+import { OpenAIService } from "./OpenAIService";
+import { PROMPTS, ARTIFACT_LABELS } from "../constants";
 
 export class XRayService {
+  private openai: OpenAIService;
+
+  constructor() {
+    this.openai = new OpenAIService();
+  }
+
   async run(userInput: string): Promise<string> {
+    console.info("[XRayService] run() start... ", userInput);
     const xray = new XRay();
-    // Use the user's input as the execution name
     xray.startExecution(userInput, {
       originalRequest: userInput,
     });
@@ -15,17 +23,29 @@ export class XRayService {
     xray.saveState();
 
     try {
-      // Strategy Dispatcher: Select workflow based on intent
-      let workflow: IWorkflow;
-      const lowerInput = userInput.toLowerCase();
+      const routerStep = xray.startStep("Intent Classification", "custom", {
+        userInput,
+      });
 
-      if (
-        lowerInput.includes("blog") ||
-        lowerInput.includes("article") ||
-        lowerInput.includes("post")
-      ) {
+      const routerPrompt = PROMPTS.ROUTER(userInput);
+      const routerResult = await this.openai.generateJson<{
+        workflow: "PRODUCT_SEARCH" | "BLOG_RECOMMENDATION";
+        reasoning: string;
+      }>(routerPrompt);
+
+      routerStep.setReasoning(routerResult.reasoning);
+      routerStep.setOutput({ selectedWorkflow: routerResult.workflow });
+      xray.endStep(routerStep);
+      xray.saveState();
+
+      let workflow: IWorkflow;
+      if (routerResult.workflow === "BLOG_RECOMMENDATION") {
+        console.info(
+          "[XRayService] Router selected: BlogRecommendationWorkflow"
+        );
         workflow = new BlogRecommendationWorkflow();
       } else {
+        console.info("[XRayService] Router selected: ProductSearchWorkflow");
         workflow = new ProductSearchWorkflow(); // Default
       }
 
@@ -43,7 +63,7 @@ export class XRayService {
       xray.endExecution();
       xray.saveState();
     }
-
+    console.info("[XRayService] run() end... ");
     return xray.getExecutionId() || "";
   }
 }
