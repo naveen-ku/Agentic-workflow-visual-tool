@@ -99,6 +99,45 @@ export function ArtifactTable({ artifacts, evaluations }: Props) {
             );
           }
 
+          if (a.label === UI_LABELS.BLOG_METRICS_LABEL) {
+            const data = a.data as any[];
+            return (
+              <tr key={a.artifactId} className="border-t">
+                <td className="p-2 font-medium" colSpan={3}>
+                  <div className="mb-2 font-semibold text-gray-700">
+                    {a.label}
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs border bg-white">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="p-2 text-left border">Title</th>
+                          <th className="p-2 text-right border">Views</th>
+                          <th className="p-2 text-right border">Sentiment</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.map((item: any, idx: number) => (
+                          <tr key={idx} className="border-t">
+                            <td className="p-2 border font-medium">
+                              {item.title}
+                            </td>
+                            <td className="p-2 border text-right">
+                              {item.views.toLocaleString()}
+                            </td>
+                            <td className="p-2 border text-right">
+                              {item.sentiment}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            );
+          }
+
           const evalResult = evalMap[a.artifactId];
           const hasEvaluation = !!evalResult;
           const passed = evalResult?.qualified;

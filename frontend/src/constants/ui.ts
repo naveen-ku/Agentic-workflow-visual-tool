@@ -17,4 +17,5 @@ export const UI_LABELS = {
   TABLE_HEADER_STATUS: "Status",
   TABLE_HEADER_DETAILS: "Details",
   CANDIDATE_EVALUATIONS_LABEL: "Candidate Evaluations",
+  BLOG_METRICS_LABEL: "Blog Metrics",
 };

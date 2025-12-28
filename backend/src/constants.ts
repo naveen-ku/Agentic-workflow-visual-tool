@@ -27,6 +27,7 @@ export const STEP_NAMES = {
   RELEVANCE: "Semantic Relevance Check",
   RANKING: "Final Ranking",
   FAILURE: "Execution Failed",
+  BLOG_RECOMMENDATION: "Blog Recommendation Logic",
 };
 
 export const ARTIFACT_LABELS = {
@@ -38,6 +39,7 @@ export const ARTIFACT_LABELS = {
   TOP_PICK: "Top Pick",
   ERROR_DETAILS: "Error Details",
   CANDIDATE_EVALUATIONS: "Candidate Evaluations",
+  BLOG_METRICS: "Blog Metrics",
 };
 
 export const CRITERIA = {
