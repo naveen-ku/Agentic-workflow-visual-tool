@@ -44,4 +44,8 @@ constructor(
     this.store.save(this.execution)
     this.execution = undefined
   }
+
+  getExecutionId(): string | undefined {
+    return this.execution?.executionId;
+  }
 }
