@@ -38,7 +38,22 @@ export const startNewExecution = createAsyncThunk(
 const executionSlice = createSlice({
   name: "executions",
   initialState,
-  reducers: {},
+  reducers: {
+    updateExecution(state, action: { payload: Execution }) {
+      const updated = action.payload;
+      if (state.selected?.executionId === updated.executionId) {
+        state.selected = updated;
+      }
+      const index = state.executions.findIndex(
+        (e) => e.executionId === updated.executionId
+      );
+      if (index !== -1) {
+        state.executions[index] = updated;
+      } else {
+        state.executions.unshift(updated);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loadExecutions.pending, (state) => {
@@ -61,4 +76,5 @@ const executionSlice = createSlice({
   },
 });
 
+export const { updateExecution } = executionSlice.actions;
 export default executionSlice.reducer;

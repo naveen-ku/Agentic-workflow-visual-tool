@@ -4,6 +4,7 @@ import {
   loadExecutions,
   loadExecutionById,
   startNewExecution,
+  updateExecution,
 } from "../store/executionSlice";
 import { ExecutionList } from "../features/executions/ExecutionList";
 import { ExecutionDetail } from "../features/executions/ExecutionDetail";
@@ -39,6 +40,37 @@ export function Dashboard() {
   };
 
   // ... inside Dashboard ...
+
+  useEffect(() => {
+    if (
+      !selected ||
+      (selected.status !== "pending" && selected.status !== "running")
+    ) {
+      return;
+    }
+
+    const eventSource = new EventSource(
+      `http://localhost:3000/api/executions/${selected.executionId}/stream`
+    );
+
+    eventSource.onmessage = (event) => {
+      try {
+        const updatedExecution = JSON.parse(event.data);
+        dispatch(updateExecution(updatedExecution));
+      } catch (err) {
+        console.error("Failed to parse SSE data", err);
+      }
+    };
+
+    eventSource.onerror = (err) => {
+      console.error("SSE Error", err);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [selected?.executionId, selected?.status, dispatch]);
 
   if (loading && executions.length === 0) {
     return <div className="p-4">{UI_LABELS.LOADING_MESSAGE}</div>;

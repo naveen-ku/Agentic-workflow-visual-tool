@@ -18,14 +18,27 @@ export class XRay {
       metadata,
       steps: [],
       startedAt: Date.now(),
+      status: "pending",
     };
     console.info("[XRay] startExecution() end... ");
+  }
+
+  // Helper to mark running (e.g. when first step starts)
+  setStatus(status: "pending" | "running" | "completed" | "failed") {
+    if (this.execution) {
+      this.execution.status = status;
+      this.saveState();
+    }
   }
 
   startStep(name: string, type: StepType, input: any): XRayStep {
     console.info("[XRay] startStep() start... ", name, " , ", type);
     if (!this.execution) {
       throw new Error("No active execution");
+    }
+    if (this.execution.status === "pending") {
+      this.execution.status = "running";
+      this.saveState();
     }
     console.info("[XRay] startStep() end... ");
     return new XRayStep(name, type, input);
@@ -50,9 +63,20 @@ export class XRay {
     if (!this.execution) return;
 
     this.execution.endedAt = Date.now();
+    // Only mark completed if not already failed
+    if (this.execution.status !== "failed") {
+      this.execution.status = "completed";
+    }
     this.store.save(this.execution);
     this.execution = undefined;
     console.info("[XRay] endExecution() end... ");
+  }
+
+  failExecution(error: string) {
+    if (this.execution) {
+      this.execution.status = "failed";
+      this.store.save(this.execution);
+    }
   }
 
   getExecutionId(): string | undefined {

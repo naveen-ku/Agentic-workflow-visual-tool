@@ -12,16 +12,25 @@ export class XRayService {
     this.openai = OpenAIService.getInstance();
   }
 
-  async run(userInput: string): Promise<string> {
-    console.info("[XRayService] run() start... ", userInput);
+  async startExecution(userInput: string): Promise<string> {
+    console.info("[XRayService] startExecution() ... ", userInput);
     const xray = new XRay();
     xray.startExecution(userInput, {
       originalRequest: userInput,
     });
+    xray.saveState(); // Saved with ID
 
-    // Save initial state
-    xray.saveState();
+    // Run the rest in background
+    this.runWorkflow(xray, userInput).catch((err) => {
+      console.error("Background workflow failed", err);
+    });
 
+    return xray.getExecutionId() || "";
+  }
+
+  // Private method to run the actual logic
+  private async runWorkflow(xray: XRay, userInput: string): Promise<void> {
+    console.info("[XRayService] runWorkflow() background start...");
     try {
       const routerStep = xray.startStep("Intent Classification", "custom", {
         userInput,
@@ -58,13 +67,13 @@ export class XRayService {
         error: e.message,
       });
       xray.endStep(errorStep);
+      xray.failExecution(e.message); // Mark failed
       xray.saveState();
     } finally {
       xray.endExecution();
       xray.saveState();
     }
-    console.info("[XRayService] run() end... ");
-    return xray.getExecutionId() || "";
+    console.info("[XRayService] runWorkflow() background end... ");
   }
 }
 

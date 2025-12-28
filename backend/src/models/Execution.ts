@@ -1,12 +1,13 @@
-import { Step } from "./Step"
+import { Step } from "./Step";
 
 export interface Execution {
-  executionId: string
-  name: string
-  metadata?: Record<string, any>
+  executionId: string;
+  name: string;
+  metadata?: Record<string, any>;
 
-  steps: Step[]
+  steps: Step[];
 
-  startedAt: number
-  endedAt?: number
+  startedAt: number;
+  endedAt?: number;
+  status: "pending" | "running" | "completed" | "failed";
 }
