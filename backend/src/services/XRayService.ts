@@ -49,7 +49,7 @@ export class XRayService {
       }>(genPrompt);
 
       genStep.addArtifact("Prompt Analysis", {
-        derivedKeywords: genResult.keywords,
+        derivedKeywords: genResult.keywords.join(", "),
       });
       genStep.setReasoning(genResult.reasoning);
       genStep.setOutput({ keywords: genResult.keywords });
@@ -63,10 +63,23 @@ export class XRayService {
 
       const searchResults = this.performSearch(genResult.keywords);
 
-      searchStep.addArtifact("Raw Search Results", {
+      const searchArtifact = searchStep.addArtifact("Raw Search Results", {
         count: searchResults.length,
       });
+      searchStep.evaluateArtifact(searchArtifact, [
+        {
+          criterion: "Database Hit",
+          passed: searchResults.length > 0,
+          detail: `Found ${searchResults.length} products matching keywords.`,
+        },
+      ]);
+
       searchStep.setOutput({ results: searchResults });
+      searchStep.setReasoning(
+        `Found ${
+          searchResults.length
+        } items matching keywords: ${genResult.keywords.join(", ")}`
+      );
       xray.endStep(searchStep);
       xray.saveState();
 
@@ -111,7 +124,11 @@ export class XRayService {
 
       const droppedCount = searchResults.length - filteredResults.length;
       const filterArtifactId = filterStep.addArtifact("Filter Logic", {
-        criteria: filterCriteria,
+        criteria: JSON.stringify(filterCriteria),
+        message:
+          droppedCount > 0
+            ? `Excluded ${droppedCount} items`
+            : "No items excluded (criteria matched all)",
         dropped: droppedCount,
       });
 
@@ -119,7 +136,12 @@ export class XRayService {
         {
           criterion: "Filter Applied",
           passed: true,
-          detail: `Applied ${JSON.stringify(filterCriteria)}`,
+          detail:
+            droppedCount > 0
+              ? `Dropped ${droppedCount} items based on ${JSON.stringify(
+                  filterCriteria
+                )}`
+              : "No items dropped. Search results matched criteria.",
         },
       ]);
 
