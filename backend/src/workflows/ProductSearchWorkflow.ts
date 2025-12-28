@@ -17,6 +17,7 @@ export class ProductSearchWorkflow implements IWorkflow {
   }
 
   async run(userInput: string, xray: XRay): Promise<void> {
+    console.info("[ProductSearchWorkflow] run() start...", userInput);
     // 1. Generation Step
     const genStep = xray.startStep(STEP_NAMES.GENERATION, "generation", {
       userInput,
@@ -194,9 +195,11 @@ export class ProductSearchWorkflow implements IWorkflow {
     rankStep.setOutput({ rankedItems });
     xray.endStep(rankStep);
     xray.saveState();
+    console.info("[ProductSearchWorkflow] run() end...");
   }
 
   private performSearch(keywords: string[]): any[] {
+    console.info("[ProductSearchWorkflow] performSearch() start...", keywords);
     return this.productsData.filter((p) => {
       const text = (
         p.title +

@@ -17,11 +17,13 @@ export class OpenAIService {
     prompt: string,
     model: string = "gpt-4-turbo"
   ): Promise<string> {
+    console.info("[OpenAIService] generate() start...", { model });
     try {
       const response = await this.openai.chat.completions.create({
         model: model,
         messages: [{ role: "user", content: prompt }],
       });
+      console.info("[OpenAIService] generate() end...");
       return response.choices[0].message.content || "";
     } catch (error) {
       console.error("OpenAI Generate Error:", error);
@@ -33,6 +35,7 @@ export class OpenAIService {
     prompt: string,
     model: string = "gpt-4-turbo"
   ): Promise<T> {
+    console.info("[OpenAIService] generateJson() start...", { model });
     try {
       const response = await this.openai.chat.completions.create({
         model: model,
@@ -47,6 +50,7 @@ export class OpenAIService {
         response_format: { type: "json_object" },
       });
       const content = response.choices[0].message.content || "{}";
+      console.info("[OpenAIService] generateJson() end...");
       return JSON.parse(content) as T;
     } catch (error) {
       console.error("OpenAI Generate JSON Error:", error);

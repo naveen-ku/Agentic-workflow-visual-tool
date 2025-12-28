@@ -17,6 +17,7 @@ export class BlogRecommendationWorkflow implements IWorkflow {
   }
 
   async run(userInput: string, xray: XRay): Promise<void> {
+    console.info("[BlogRecommendationWorkflow] run() start...", userInput);
     // 1. Generation
     const genStep = xray.startStep(STEP_NAMES.GENERATION, "generation", {
       userInput,
@@ -138,5 +139,6 @@ export class BlogRecommendationWorkflow implements IWorkflow {
     rankStep.setOutput({ ranked });
     xray.endStep(rankStep);
     xray.saveState();
+    console.info("[BlogRecommendationWorkflow] run() end...");
   }
 }
