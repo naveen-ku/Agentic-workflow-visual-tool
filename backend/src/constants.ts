@@ -103,6 +103,7 @@ export const ARTIFACT_LABELS = {
   ERROR_DETAILS: "Error Details",
   CANDIDATE_EVALUATIONS: "Candidate Evaluations",
   BLOG_METRICS: "Blog Metrics",
+  RANKED_RESULTS: "Ranked Results",
 };
 
 export const CRITERIA = {

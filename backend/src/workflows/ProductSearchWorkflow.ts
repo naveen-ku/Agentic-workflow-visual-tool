@@ -47,7 +47,11 @@ export class ProductSearchWorkflow implements IWorkflow {
 
     const searchArtifact = searchStep.addArtifact(
       ARTIFACT_LABELS.RAW_SEARCH_RESULTS,
-      { count: searchResults.length }
+      {
+        count: searchResults.length,
+        results: searchResults.slice(0, 50), // Cap at 50 for display
+        keywords: genResult.keywords,
+      }
     );
     searchStep.evaluateArtifact(searchArtifact, [
       {
@@ -129,6 +133,13 @@ export class ProductSearchWorkflow implements IWorkflow {
       (a, b) => b.relevanceScore - a.relevanceScore
     );
     rankStep.addArtifact(ARTIFACT_LABELS.TOP_PICK, rankedItems[0]);
+    // Add Table for full ranking
+    rankStep.addArtifact(ARTIFACT_LABELS.RANKED_RESULTS, {
+      items: rankedItems.map((item, idx) => ({
+        rank: idx + 1,
+        ...item,
+      })),
+    });
     rankStep.setOutput({ rankedItems });
     xray.endStep(rankStep);
     xray.saveState();

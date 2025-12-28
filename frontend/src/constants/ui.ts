@@ -19,4 +19,6 @@ export const UI_LABELS = {
   CANDIDATE_EVALUATIONS_LABEL: "Candidate Evaluations",
   BLOG_METRICS_LABEL: "Blog Metrics",
   RELEVANCE_SCORES_LABEL: "Relevance Scores",
+  RANKED_RESULTS_LABEL: "Ranked Results",
+  PROMPT_ANALYSIS_LABEL: "Prompt Analysis",
 };

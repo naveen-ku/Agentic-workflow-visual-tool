@@ -9,6 +9,40 @@ interface Props {
 export function ArtifactTable({ artifacts, evaluations }: Props) {
   const evalMap = Object.fromEntries(evaluations.map((e) => [e.artifactId, e]));
 
+  // Helper for highlighting specific keywords in text
+  const HighlightText = ({
+    text,
+    keywords,
+  }: {
+    text: string;
+    keywords?: string[];
+  }) => {
+    if (!text) return null;
+    if (!keywords || keywords.length === 0) return <>{text}</>;
+
+    // Escape keywords for regex safety
+    const safeKeywords = keywords.map((k) =>
+      k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    );
+    const parts = text.split(new RegExp(`(${safeKeywords.join("|")})`, "gi"));
+    return (
+      <span>
+        {parts.map((part, i) =>
+          safeKeywords.some((k) => k.toLowerCase() === part.toLowerCase()) ? (
+            <span
+              key={i}
+              className="bg-yellow-200 text-black font-semibold rounded px-0.5"
+            >
+              {part}
+            </span>
+          ) : (
+            part
+          )
+        )}
+      </span>
+    );
+  };
+
   return (
     <table className="w-full text-sm border">
       <thead className="bg-gray-100">
@@ -21,6 +55,138 @@ export function ArtifactTable({ artifacts, evaluations }: Props) {
 
       <tbody>
         {artifacts.map((a) => {
+          // 1. Prompt Analysis (Keywords)
+          if (a.label === UI_LABELS.PROMPT_ANALYSIS_LABEL) {
+            const data = a.data as any;
+            const keywords = data.derivedKeywords
+              ? data.derivedKeywords.split(",").map((s: string) => s.trim())
+              : [];
+            return (
+              <tr key={a.artifactId} className="border-t">
+                <td className="p-2 font-medium">{a.label}</td>
+                <td className="p-2 text-center text-gray-500">
+                  {UI_LABELS.STATUS_INFO}
+                </td>
+                <td className="p-2">
+                  <div className="flex flex-wrap gap-2">
+                    {keywords.map((k: string, i: number) => (
+                      <span
+                        key={i}
+                        className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold"
+                      >
+                        {k}
+                      </span>
+                    ))}
+                  </div>
+                  {data.reasoning && (
+                    <div className="mt-2 text-gray-600 text-xs italic">
+                      {data.reasoning}
+                    </div>
+                  )}
+                </td>
+              </tr>
+            );
+          }
+
+          // 2. Raw Search Results (Highlighting)
+          if (a.label === "Raw Search Results") {
+            // Hardcoded label fallback or use constant if avail
+            const data = a.data as any;
+            const results = data.results || [];
+            const keywords = data.keywords || [];
+
+            if (!results.length) return null;
+
+            return (
+              <tr key={a.artifactId} className="border-t">
+                <td className="p-2 font-medium" colSpan={3}>
+                  <div className="mb-2 font-semibold text-gray-700">
+                    {a.label} ({data.count} items)
+                  </div>
+                  <div className="max-h-60 overflow-y-auto border rounded bg-gray-50 p-2">
+                    <ul className="space-y-2">
+                      {results.map((item: any, idx: number) => (
+                        <li
+                          key={idx}
+                          className="text-xs bg-white p-2 rounded shadow-sm"
+                        >
+                          <div className="font-medium text-gray-800">
+                            <HighlightText
+                              text={item.title}
+                              keywords={keywords}
+                            />
+                          </div>
+                          <div className="text-gray-500 mt-1">
+                            {item.category && (
+                              <span className="mr-2">
+                                Category:{" "}
+                                <HighlightText
+                                  text={item.category}
+                                  keywords={keywords}
+                                />
+                              </span>
+                            )}
+                            {item.brand && (
+                              <span>
+                                Brand:{" "}
+                                <HighlightText
+                                  text={item.brand}
+                                  keywords={keywords}
+                                />
+                              </span>
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            );
+          }
+
+          // 3. Ranked Results Table
+          if (a.label === UI_LABELS.RANKED_RESULTS_LABEL) {
+            const data = a.data as any;
+            const items = data.items || [];
+
+            return (
+              <tr key={a.artifactId} className="border-t">
+                <td className="p-2 font-medium" colSpan={3}>
+                  <div className="mb-2 font-semibold text-gray-700">
+                    {a.label}
+                  </div>
+                  <div className="overflow-x-auto mb-2">
+                    <table className="w-full text-xs border bg-white">
+                      <thead className="bg-green-50">
+                        <tr>
+                          <th className="p-2 text-center border">Rank</th>
+                          <th className="p-2 text-left border">Title</th>
+                          <th className="p-2 text-center border">Score</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {items.map((item: any, idx: number) => (
+                          <tr key={idx} className="border-t">
+                            <td className="p-2 border text-center font-bold text-green-700">
+                              #{item.rank}
+                            </td>
+                            <td className="p-2 border font-medium">
+                              {item.title}
+                            </td>
+                            <td className="p-2 border text-center">
+                              {item.relevanceScore?.toFixed(2)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  x
+                </td>
+              </tr>
+            );
+          }
           // Special handling for detailed candidate evaluations
           if (a.label === UI_LABELS.CANDIDATE_EVALUATIONS_LABEL) {
             const data = a.data as any[];
