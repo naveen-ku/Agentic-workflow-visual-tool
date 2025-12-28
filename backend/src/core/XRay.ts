@@ -1,17 +1,17 @@
 // XRay.ts
-import { Execution } from "./models/Execution"
-import { StepType } from "./models/Step"
-import { InMemoryStore } from "./store/InMemoryStore"
-import { XRayStep } from "./core/XRayStep"
+import { Execution } from "../models/Execution"
+import { StepType } from "../models/Step"
+import { XRayStep } from "./XRayStep"
 import { v4 as uuidv4 } from 'uuid';
+import { executionStore } from "../store/executionStore";
 
 export class XRay {
-  private store: InMemoryStore
   private execution?: Execution
 
-  constructor(store: InMemoryStore) {
-    this.store = store
-  }
+constructor(
+    private readonly store = executionStore
+  ) {}
+
 
   startExecution(name: string, metadata?: Record<string, any>) {
     this.execution = {
@@ -41,7 +41,7 @@ export class XRay {
     if (!this.execution) return
 
     this.execution.endedAt = Date.now()
-    this.store.saveExecution(this.execution)
+    this.store.save(this.execution)
     this.execution = undefined
   }
 }

@@ -1,8 +1,7 @@
-import { XRay } from "../XRay"
-import { InMemoryStore } from "../store/InMemoryStore"
+import { XRay } from "../core/XRay"
+import { executionStore } from "../store/executionStore";
 
-const store = new InMemoryStore()
-const xray = new XRay(store)
+const xray = new XRay();
 
 console.log("Starting X-Ray Demo Execution...\n")
 
@@ -76,5 +75,5 @@ xray.endExecution()
 
 console.log("\nExecution complete.\n")
 console.log(
-  JSON.stringify(store.listExecutions(), null, 2)
+  JSON.stringify(executionStore.list(), null, 2)
 )

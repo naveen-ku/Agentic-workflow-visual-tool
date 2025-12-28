@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import executionRoutes from "./routes/executions"
 
 dotenv.config();
 
@@ -17,6 +18,8 @@ app.get('/', (req, res) => {
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend is running' });
 });
+
+app.use("/api/executions", executionRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
