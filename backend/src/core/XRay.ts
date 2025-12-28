@@ -23,7 +23,7 @@ export class XRay {
   }
 
   startStep(name: string, type: StepType, input: any): XRayStep {
-    console.info("[XRay] startStep() start... ", name, type);
+    console.info("[XRay] startStep() start... ", name, " , ", type);
     if (!this.execution) {
       throw new Error("No active execution");
     }
@@ -35,6 +35,7 @@ export class XRay {
     console.info(
       "[XRay] endStep() start... ",
       step.getStepName(),
+      ", ",
       step.getStepType()
     );
     if (!this.execution) {

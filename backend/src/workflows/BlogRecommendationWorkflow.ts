@@ -2,16 +2,19 @@ import { IWorkflow } from "./IWorkflow";
 import { XRay } from "../core/XRay";
 import { OpenAIService } from "../services/OpenAIService";
 import { STEP_NAMES, ARTIFACT_LABELS, CRITERIA } from "../constants";
+import { DynamicFilterService } from "../services/DynamicFilterService";
 import path from "path";
 import fs from "fs";
 
 export class BlogRecommendationWorkflow implements IWorkflow {
   name = "Blog Recommendation Workflow";
   private openai: OpenAIService;
+  private filterService: DynamicFilterService;
   private blogsData: any[];
 
   constructor() {
     this.openai = OpenAIService.getInstance();
+    this.filterService = new DynamicFilterService();
     const blogsPath = path.join(__dirname, "../data/blogs.json");
     this.blogsData = JSON.parse(fs.readFileSync(blogsPath, "utf-8"));
   }
@@ -24,12 +27,11 @@ export class BlogRecommendationWorkflow implements IWorkflow {
     });
     const genPrompt = `
       User Request: "${userInput}"
-      Task: Extract key topics and target audience complexity (Beginner/Intermediate/Advanced) for a technical blog search.
-      Output JSON: { "topics": ["topic1"], "complexity": "Beginner" | null, "reasoning": "..." }
+      Task: Extract key topics for blog recommendation and comparision.
+      Output JSON: { "topics": ["topic1"], "reasoning": "..." }
     `;
     const genResult = await this.openai.generateJson<{
       topics: string[];
-      complexity: string | null;
       reasoning: string;
     }>(genPrompt);
 
@@ -62,64 +64,18 @@ export class BlogRecommendationWorkflow implements IWorkflow {
 
     if (searchResults.length === 0) return;
 
-    // 3. Filter (Complexity)
+    // 3. Filter (Dynamic)
     const filterStep = xray.startStep(STEP_NAMES.FILTER, "apply_filter", {
       count: searchResults.length,
-      targetComplexity: genResult.complexity,
     });
 
-    const candidateEvaluations = searchResults.map((b) => {
-      const isComplexityMatch =
-        !genResult.complexity || b.difficulty_level === genResult.complexity;
-
-      const rules = {
-        complexity: {
-          passed: isComplexityMatch,
-          detail: genResult.complexity
-            ? `${b.difficulty_level} ${isComplexityMatch ? "==" : "!="} ${
-                genResult.complexity
-              }`
-            : "Any",
-        },
-      };
-
-      return {
-        item: b.title,
-        complexity: b.difficulty_level,
-        views: b.metrics.views,
-        rules,
-        qualified: isComplexityMatch,
-        originalItem: b,
-      };
-    });
-
-    const filteredResults = candidateEvaluations
-      .filter((c) => c.qualified)
-      .map((c) => c.originalItem);
-
-    filterStep.addArtifact(
-      ARTIFACT_LABELS.CANDIDATE_EVALUATIONS,
-      candidateEvaluations
+    // Use Schema-Agnostic Filter Service
+    const filteredResults = await this.filterService.applyFilter(
+      filterStep,
+      searchResults,
+      userInput
     );
 
-    const droppedCount = searchResults.length - filteredResults.length;
-    filterStep.addArtifact(ARTIFACT_LABELS.FILTER_LOGIC, {
-      complexityFilter: genResult.complexity || "None",
-      dropped: droppedCount,
-    });
-
-    filterStep.evaluateArtifact(ARTIFACT_LABELS.FILTER_LOGIC, [
-      {
-        criterion: CRITERIA.FILTER_APPLIED,
-        passed: filteredResults.length > 0,
-        detail:
-          droppedCount > 0
-            ? `Dropped ${droppedCount} blogs based on complexity.`
-            : "No blogs dropped.",
-      },
-    ]);
-
-    filterStep.setOutput({ filteredResults });
     xray.endStep(filterStep);
     xray.saveState();
 

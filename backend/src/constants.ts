@@ -8,6 +8,65 @@ export const PROMPTS = {
     - BLOG_RECOMMENDATION: For finding articles, reading material, tutorials, opinion pieces, or educational content.
     
     Output JSON: { "workflow": "PRODUCT_SEARCH" | "BLOG_RECOMMENDATION", "reasoning": "..." }`,
+  DYNAMIC_FILTER: (
+    input: string,
+    count: number,
+    schema: Record<string, string>
+  ) => `
+You are a decision engine that converts a user's natural language intent
+into structured, schema-safe filter rules.
+
+Context:
+- User Request: "${input}"
+- Items Available: ${count}
+- Available Data Schema (valid fields only): ${JSON.stringify(schema)}
+
+Your task:
+1. Analyze the user's intent.
+2. Determine which schema fields are relevant to that intent.
+3. Generate ONLY explicit, binary filter rules:
+   - A rule either includes or excludes items.
+   - If a field is not clearly relevant, DO NOT generate a rule for it.
+
+Rule constraints:
+- You MUST ONLY use fields from the provided schema.
+- You MUST NOT invent fields.
+- You MUST choose from the following operators only:
+  - ">"  (numeric greater than)
+  - "<"  (numeric less than)
+  - "==" (exact match)
+  - "contains" (string containment)
+- Numeric thresholds must be:
+  - Reasonable
+  - Conservative
+  - Interpretable without external context
+- If the user's intent is subjective (e.g., "cheap", "premium", "expert"),
+  infer thresholds using common-sense defaults.
+
+Examples:
+- "cheap" → price < median or price < lower quartile
+- "premium" → rating > 4.2 AND reviews > 100
+- "expert" → difficulty_level == "Advanced"
+
+Output rules:
+- Return an empty list if no clear filters apply.
+- Do NOT over-filter.
+- Prefer fewer, higher-confidence rules.
+
+Output format:
+Return STRICT JSON ONLY. No prose, no markdown.
+
+{
+  "rules": [
+    {
+      "field": "path.to.field",
+      "operator": ">" | "<" | "==" | "contains",
+      "value": any
+    }
+  ],
+  "reasoning": "..."
+}
+`,
   FILTER: (input: string, count: number) => `
         User Request: "${input}"
         Items found: ${count}

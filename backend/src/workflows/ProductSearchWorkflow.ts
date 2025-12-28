@@ -2,16 +2,19 @@ import { IWorkflow } from "./IWorkflow";
 import { XRay } from "../core/XRay";
 import { OpenAIService } from "../services/OpenAIService";
 import { PROMPTS, STEP_NAMES, ARTIFACT_LABELS, CRITERIA } from "../constants";
+import { DynamicFilterService } from "../services/DynamicFilterService";
 import path from "path";
 import fs from "fs";
 
 export class ProductSearchWorkflow implements IWorkflow {
   name = "Product Search Workflow";
   private openai: OpenAIService;
+  private filterService: DynamicFilterService;
   private productsData: any[];
 
   constructor() {
     this.openai = OpenAIService.getInstance();
+    this.filterService = new DynamicFilterService();
     const productsPath = path.join(__dirname, "../data/products.json");
     this.productsData = JSON.parse(fs.readFileSync(productsPath, "utf-8"));
   }
@@ -64,89 +67,18 @@ export class ProductSearchWorkflow implements IWorkflow {
       return;
     }
 
-    // 3. Filter Step
+    // 3. Filter Step (Dynamic)
     const filterStep = xray.startStep(STEP_NAMES.FILTER, "apply_filter", {
       itemCount: searchResults.length,
     });
-    const filterPrompt = PROMPTS.FILTER(userInput, searchResults.length);
-    const filterCriteria = await this.openai.generateJson<{
-      maxPrice?: number;
-      minRating?: number;
-      requiredMaterial?: string;
-      reasoning: string;
-    }>(filterPrompt);
 
-    const candidateEvaluations = searchResults.map((p) => {
-      const rules = {
-        price: {
-          passed:
-            !filterCriteria.maxPrice || p.price <= filterCriteria.maxPrice,
-          detail: filterCriteria.maxPrice
-            ? `${p.price} ${p.price <= filterCriteria.maxPrice ? "<=" : ">"} ${
-                filterCriteria.maxPrice
-              }`
-            : "N/A",
-        },
-        rating: {
-          passed:
-            !filterCriteria.minRating || p.rating >= filterCriteria.minRating,
-          detail: filterCriteria.minRating
-            ? `${p.rating} ${
-                p.rating >= filterCriteria.minRating ? ">=" : "<"
-              } ${filterCriteria.minRating}`
-            : "N/A",
-        },
-        material: {
-          passed:
-            !filterCriteria.requiredMaterial ||
-            p.material === filterCriteria.requiredMaterial,
-          detail: filterCriteria.requiredMaterial
-            ? `${p.material} ${
-                p.material === filterCriteria.requiredMaterial ? "==" : "!="
-              } ${filterCriteria.requiredMaterial}`
-            : "N/A",
-        },
-      };
-      const qualified = Object.values(rules).every((r) => r.passed);
-      return {
-        item: `${p.title} (${p.brand})`,
-        price: p.price,
-        rating: p.rating,
-        material: p.material,
-        rules,
-        qualified,
-        originalItem: p,
-      };
-    });
-
-    const filteredResults = candidateEvaluations
-      .filter((c) => c.qualified)
-      .map((c) => c.originalItem);
-
-    filterStep.addArtifact(
-      ARTIFACT_LABELS.CANDIDATE_EVALUATIONS,
-      candidateEvaluations
+    // Use Schema-Agnostic Filter Service
+    const filteredResults = await this.filterService.applyFilter(
+      filterStep,
+      searchResults,
+      userInput
     );
 
-    const droppedCount = searchResults.length - filteredResults.length;
-    const filterArtifactId = filterStep.addArtifact(
-      ARTIFACT_LABELS.FILTER_LOGIC,
-      {
-        criteria: JSON.stringify(filterCriteria),
-        dropped: droppedCount,
-      }
-    );
-    filterStep.evaluateArtifact(filterArtifactId, [
-      {
-        criterion: CRITERIA.FILTER_APPLIED,
-        passed: filteredResults.length > 0,
-        detail:
-          filteredResults.length > 0
-            ? "Items passed filtering."
-            : "All items were filtered out (Too strict).",
-      },
-    ]);
-    filterStep.setReasoning(filterCriteria.reasoning);
     filterStep.setOutput({ filteredItems: filteredResults });
     xray.endStep(filterStep);
     xray.saveState();
