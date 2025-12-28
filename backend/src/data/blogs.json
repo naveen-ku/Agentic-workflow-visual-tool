@@ -1,0 +1,1681 @@
+[
+  {
+    "article_id": "BLOG-TECH-001",
+    "category": "Tech & AI",
+    "title": "The Rise of Agentic AI in 2025",
+    "author": "Dr. Aris Thorne",
+    "word_count": 1250,
+    "tags": [
+      "AI",
+      "Automation",
+      "Future Tech"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 15400,
+      "avg_read_time_seconds": 340,
+      "shares": 1200,
+      "bounce_rate": 0.35
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "ML",
+        "LLMs"
+      ],
+      "sentiment": 0.85,
+      "evergreen": 0.9
+    },
+    "published_date": "2025-10-12T08:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-002",
+    "category": "Tech & AI",
+    "title": "Quantum Computing: From Theory to Desktop",
+    "author": "Sarah Jenkins",
+    "word_count": 2100,
+    "tags": [
+      "Quantum",
+      "Hardware",
+      "Physics"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 8200,
+      "avg_read_time_seconds": 580,
+      "shares": 450,
+      "bounce_rate": 0.42
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Cryptography",
+        "Qubits"
+      ],
+      "sentiment": 0.6,
+      "evergreen": 0.95
+    },
+    "published_date": "2025-11-05T10:30:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-003",
+    "category": "Tech & AI",
+    "title": "Why Rust is Replacing C++",
+    "author": "Leo Meyer",
+    "word_count": 1800,
+    "tags": [
+      "Rust",
+      "Programming",
+      "Systems"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 22000,
+      "avg_read_time_seconds": 450,
+      "shares": 3100,
+      "bounce_rate": 0.28
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Memory Management",
+        "DevOps"
+      ],
+      "sentiment": 0.75,
+      "evergreen": 0.85
+    },
+    "published_date": "2025-12-01T09:15:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-004",
+    "category": "Tech & AI",
+    "title": "Understanding Neural Networks",
+    "author": "Dr. Aris Thorne",
+    "word_count": 1500,
+    "tags": [
+      "AI",
+      "Deep Learning"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 12000,
+      "avg_read_time_seconds": 400,
+      "shares": 800,
+      "bounce_rate": 0.3
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Math",
+        "Data Science"
+      ],
+      "sentiment": 0.7,
+      "evergreen": 0.99
+    },
+    "published_date": "2025-09-10T11:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-005",
+    "category": "Tech & AI",
+    "title": "5G and the Future of IoT",
+    "author": "Chris Wu",
+    "word_count": 900,
+    "tags": [
+      "5G",
+      "IoT",
+      "Connectivity"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 18000,
+      "avg_read_time_seconds": 210,
+      "shares": 1500,
+      "bounce_rate": 0.4
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Smart Home",
+        "Hardware"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.6
+    },
+    "published_date": "2025-08-22T14:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-006",
+    "category": "Tech & AI",
+    "title": "Cybersecurity Trends for 2026",
+    "author": "Elena Vance",
+    "word_count": 1350,
+    "tags": [
+      "Security",
+      "Data",
+      "Privacy"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 9500,
+      "avg_read_time_seconds": 320,
+      "shares": 600,
+      "bounce_rate": 0.33
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Encryption",
+        "Cloud"
+      ],
+      "sentiment": 0.4,
+      "evergreen": 0.7
+    },
+    "published_date": "2025-12-15T10:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-007",
+    "category": "Tech & AI",
+    "title": "Web3: Hype vs Reality",
+    "author": "Marcus Thorne",
+    "word_count": 2000,
+    "tags": [
+      "Web3",
+      "Blockchain",
+      "Crypto"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 14000,
+      "avg_read_time_seconds": 500,
+      "shares": 950,
+      "bounce_rate": 0.5
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Ethereum",
+        "Finance"
+      ],
+      "sentiment": 0.5,
+      "evergreen": 0.5
+    },
+    "published_date": "2025-07-30T09:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-008",
+    "category": "Tech & AI",
+    "title": "The Evolution of Cloud Computing",
+    "author": "Sarah Jenkins",
+    "word_count": 1100,
+    "tags": [
+      "Cloud",
+      "AWS",
+      "Infrastructure"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 11000,
+      "avg_read_time_seconds": 280,
+      "shares": 400,
+      "bounce_rate": 0.25
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Azure",
+        "SaaS"
+      ],
+      "sentiment": 0.8,
+      "evergreen": 0.8
+    },
+    "published_date": "2025-11-20T13:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-009",
+    "category": "Tech & AI",
+    "title": "Building your first API",
+    "author": "Leo Meyer",
+    "word_count": 2500,
+    "tags": [
+      "API",
+      "Backend",
+      "Coding"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 35000,
+      "avg_read_time_seconds": 900,
+      "shares": 5000,
+      "bounce_rate": 0.18
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "JavaScript",
+        "Python"
+      ],
+      "sentiment": 0.95,
+      "evergreen": 1.0
+    },
+    "published_date": "2025-05-15T08:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-010",
+    "category": "Tech & AI",
+    "title": "AI Ethics and Bias",
+    "author": "Dr. Aris Thorne",
+    "word_count": 1400,
+    "tags": [
+      "AI",
+      "Ethics",
+      "Society"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 7000,
+      "avg_read_time_seconds": 360,
+      "shares": 1100,
+      "bounce_rate": 0.38
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Policy",
+        "Human Rights"
+      ],
+      "sentiment": 0.3,
+      "evergreen": 0.9
+    },
+    "published_date": "2025-12-05T12:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-011",
+    "category": "Tech & AI",
+    "title": "Edge Computing Explained",
+    "author": "Chris Wu",
+    "word_count": 1000,
+    "tags": [
+      "Edge",
+      "Hardware",
+      "Network"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 5200,
+      "avg_read_time_seconds": 250,
+      "shares": 200,
+      "bounce_rate": 0.45
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Latency",
+        "Real-time"
+      ],
+      "sentiment": 0.7,
+      "evergreen": 0.85
+    },
+    "published_date": "2025-10-25T15:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-012",
+    "category": "Tech & AI",
+    "title": "The State of DevOps 2025",
+    "author": "Elena Vance",
+    "word_count": 1600,
+    "tags": [
+      "DevOps",
+      "CI/CD",
+      "Testing"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 8800,
+      "avg_read_time_seconds": 420,
+      "shares": 750,
+      "bounce_rate": 0.29
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Docker",
+        "K8s"
+      ],
+      "sentiment": 0.8,
+      "evergreen": 0.6
+    },
+    "published_date": "2025-11-12T09:30:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-013",
+    "category": "Tech & AI",
+    "title": "Microservices vs Monoliths",
+    "author": "Leo Meyer",
+    "word_count": 1900,
+    "tags": [
+      "Architecture",
+      "Software",
+      "Scalability"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 16500,
+      "avg_read_time_seconds": 480,
+      "shares": 2200,
+      "bounce_rate": 0.22
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Design Patterns",
+        "Kafka"
+      ],
+      "sentiment": 0.6,
+      "evergreen": 0.95
+    },
+    "published_date": "2025-06-18T10:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-014",
+    "category": "Tech & AI",
+    "title": "AR/VR in Remote Work",
+    "author": "Sarah Jenkins",
+    "word_count": 1300,
+    "tags": [
+      "AR",
+      "VR",
+      "Work"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 10500,
+      "avg_read_time_seconds": 300,
+      "shares": 1800,
+      "bounce_rate": 0.36
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Metaverse",
+        "Remote"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.5
+    },
+    "published_date": "2025-09-28T14:30:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-015",
+    "category": "Tech & AI",
+    "title": "Natural Language Processing 101",
+    "author": "Dr. Aris Thorne",
+    "word_count": 1700,
+    "tags": [
+      "NLP",
+      "AI",
+      "Text"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 13200,
+      "avg_read_time_seconds": 450,
+      "shares": 900,
+      "bounce_rate": 0.31
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Transformers",
+        "GPT"
+      ],
+      "sentiment": 0.8,
+      "evergreen": 0.92
+    },
+    "published_date": "2025-08-05T08:45:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-016",
+    "category": "Tech & AI",
+    "title": "Biometric Security Advancements",
+    "author": "Elena Vance",
+    "word_count": 950,
+    "tags": [
+      "Security",
+      "Biometrics",
+      "Mobile"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 6100,
+      "avg_read_time_seconds": 180,
+      "shares": 300,
+      "bounce_rate": 0.44
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "FaceID",
+        "Privacy"
+      ],
+      "sentiment": 0.7,
+      "evergreen": 0.7
+    },
+    "published_date": "2025-10-30T16:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-017",
+    "category": "Tech & AI",
+    "title": "The Future of Open Source",
+    "author": "Leo Meyer",
+    "word_count": 1550,
+    "tags": [
+      "Open Source",
+      "GitHub",
+      "Community"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 14200,
+      "avg_read_time_seconds": 390,
+      "shares": 2500,
+      "bounce_rate": 0.24
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Licensing",
+        "Contribution"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.8
+    },
+    "published_date": "2025-11-18T11:15:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-018",
+    "category": "Tech & AI",
+    "title": "Sustainable Data Centers",
+    "author": "Chris Wu",
+    "word_count": 1450,
+    "tags": [
+      "Cloud",
+      "Sustainability",
+      "Green Tech"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 5800,
+      "avg_read_time_seconds": 330,
+      "shares": 1000,
+      "bounce_rate": 0.32
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Energy",
+        "Servers"
+      ],
+      "sentiment": 0.95,
+      "evergreen": 0.9
+    },
+    "published_date": "2025-12-10T13:45:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-019",
+    "category": "Tech & AI",
+    "title": "Low-Code/No-Code Revolution",
+    "author": "Sarah Jenkins",
+    "word_count": 1200,
+    "tags": [
+      "Low-Code",
+      "Development",
+      "SaaS"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 25000,
+      "avg_read_time_seconds": 260,
+      "shares": 4200,
+      "bounce_rate": 0.2
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Citizen Dev",
+        "Agile"
+      ],
+      "sentiment": 0.85,
+      "evergreen": 0.7
+    },
+    "published_date": "2025-05-20T09:00:00Z"
+  },
+  {
+    "article_id": "BLOG-TECH-020",
+    "category": "Tech & AI",
+    "title": "Robotics in Daily Life",
+    "author": "Dr. Aris Thorne",
+    "word_count": 1650,
+    "tags": [
+      "Robotics",
+      "Automation",
+      "AI"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 19500,
+      "avg_read_time_seconds": 380,
+      "shares": 2800,
+      "bounce_rate": 0.37
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Drones",
+        "Manufacturing"
+      ],
+      "sentiment": 0.8,
+      "evergreen": 0.85
+    },
+    "published_date": "2025-09-12T10:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-001",
+    "category": "Sustainable Living",
+    "title": "Zero-Waste Kitchen: 10 Easy Swaps",
+    "author": "Maya Green",
+    "word_count": 850,
+    "tags": [
+      "Sustainability",
+      "Lifestyle",
+      "Zero Waste"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 45000,
+      "avg_read_time_seconds": 180,
+      "shares": 12500,
+      "bounce_rate": 0.15
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Recycling",
+        "Composting"
+      ],
+      "sentiment": 0.95,
+      "evergreen": 1.0
+    },
+    "published_date": "2025-08-20T07:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-002",
+    "category": "Sustainable Living",
+    "title": "The Hidden Cost of Fast Fashion",
+    "author": "Julian Rivers",
+    "word_count": 1400,
+    "tags": [
+      "Fashion",
+      "Ethics",
+      "Economy"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 18000,
+      "avg_read_time_seconds": 410,
+      "shares": 5600,
+      "bounce_rate": 0.3
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Slow Fashion",
+        "Textiles"
+      ],
+      "sentiment": -0.4,
+      "evergreen": 0.8
+    },
+    "published_date": "2025-09-15T14:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-003",
+    "category": "Sustainable Living",
+    "title": "Urban Gardening for Beginners",
+    "author": "Maya Green",
+    "word_count": 1100,
+    "tags": [
+      "Gardening",
+      "Urban",
+      "Plants"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 22000,
+      "avg_read_time_seconds": 300,
+      "shares": 4000,
+      "bounce_rate": 0.25
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Soil",
+        "Apartment Living"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.9
+    },
+    "published_date": "2025-04-10T08:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-004",
+    "category": "Sustainable Living",
+    "title": "Renewable Energy at Home",
+    "author": "Julian Rivers",
+    "word_count": 1600,
+    "tags": [
+      "Solar",
+      "Energy",
+      "Home"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 12000,
+      "avg_read_time_seconds": 450,
+      "shares": 1100,
+      "bounce_rate": 0.35
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Wind",
+        "Battery Storage"
+      ],
+      "sentiment": 0.8,
+      "evergreen": 0.75
+    },
+    "published_date": "2025-11-02T10:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-005",
+    "category": "Sustainable Living",
+    "title": "The Benefits of Veganism",
+    "author": "Maya Green",
+    "word_count": 1300,
+    "tags": [
+      "Vegan",
+      "Health",
+      "Environment"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 31000,
+      "avg_read_time_seconds": 380,
+      "shares": 8000,
+      "bounce_rate": 0.28
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Nutrition",
+        "Animal Rights"
+      ],
+      "sentiment": 0.85,
+      "evergreen": 0.8
+    },
+    "published_date": "2025-06-25T09:30:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-006",
+    "category": "Sustainable Living",
+    "title": "Plastic-Free Grocery Shopping",
+    "author": "Maya Green",
+    "word_count": 950,
+    "tags": [
+      "Plastic-Free",
+      "Grocery",
+      "Shopping"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 15000,
+      "avg_read_time_seconds": 220,
+      "shares": 3000,
+      "bounce_rate": 0.18
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Bulk",
+        "Packaging"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.95
+    },
+    "published_date": "2025-08-01T07:15:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-007",
+    "category": "Sustainable Living",
+    "title": "Electric Vehicles: Pros and Cons",
+    "author": "Julian Rivers",
+    "word_count": 1800,
+    "tags": [
+      "EV",
+      "Transport",
+      "Tech"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 25000,
+      "avg_read_time_seconds": 520,
+      "shares": 2100,
+      "bounce_rate": 0.4
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Tesla",
+        "Charging"
+      ],
+      "sentiment": 0.6,
+      "evergreen": 0.7
+    },
+    "published_date": "2025-10-18T13:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-008",
+    "category": "Sustainable Living",
+    "title": "Minimalism: Owning Less",
+    "author": "Maya Green",
+    "word_count": 1200,
+    "tags": [
+      "Minimalism",
+      "Mental Health",
+      "Home"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 48000,
+      "avg_read_time_seconds": 350,
+      "shares": 15000,
+      "bounce_rate": 0.12
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Decluttering",
+        "Focus"
+      ],
+      "sentiment": 0.98,
+      "evergreen": 1.0
+    },
+    "published_date": "2025-03-05T08:30:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-009",
+    "category": "Sustainable Living",
+    "title": "The Impact of Air Travel",
+    "author": "Julian Rivers",
+    "word_count": 1500,
+    "tags": [
+      "Travel",
+      "Carbon Footprint",
+      "Policy"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 9000,
+      "avg_read_time_seconds": 410,
+      "shares": 500,
+      "bounce_rate": 0.45
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Trains",
+        "Offsetting"
+      ],
+      "sentiment": -0.2,
+      "evergreen": 0.8
+    },
+    "published_date": "2025-07-12T11:45:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-010",
+    "category": "Sustainable Living",
+    "title": "Eco-Friendly Cleaning Products",
+    "author": "Maya Green",
+    "word_count": 1000,
+    "tags": [
+      "Home",
+      "Cleaning",
+      "DIY"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 18500,
+      "avg_read_time_seconds": 240,
+      "shares": 4500,
+      "bounce_rate": 0.2
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Vinegar",
+        "Natural"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.95
+    },
+    "published_date": "2025-09-22T08:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-011",
+    "category": "Sustainable Living",
+    "title": "Water Conservation at Home",
+    "author": "Julian Rivers",
+    "word_count": 1100,
+    "tags": [
+      "Water",
+      "Conservation",
+      "Drought"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 7500,
+      "avg_read_time_seconds": 260,
+      "shares": 800,
+      "bounce_rate": 0.33
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Plumbing",
+        "Garden"
+      ],
+      "sentiment": 0.7,
+      "evergreen": 0.9
+    },
+    "published_date": "2025-05-14T09:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-012",
+    "category": "Sustainable Living",
+    "title": "Sustainable Meat Sourcing",
+    "author": "Maya Green",
+    "word_count": 1400,
+    "tags": [
+      "Food",
+      "Meat",
+      "Farming"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 11000,
+      "avg_read_time_seconds": 390,
+      "shares": 1200,
+      "bounce_rate": 0.38
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Organic",
+        "Local"
+      ],
+      "sentiment": 0.4,
+      "evergreen": 0.75
+    },
+    "published_date": "2025-11-28T10:30:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-013",
+    "category": "Sustainable Living",
+    "title": "Ethical Banking Explained",
+    "author": "Julian Rivers",
+    "word_count": 1700,
+    "tags": [
+      "Finance",
+      "Ethics",
+      "Money"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 6200,
+      "avg_read_time_seconds": 480,
+      "shares": 300,
+      "bounce_rate": 0.5
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Investing",
+        "Divestment"
+      ],
+      "sentiment": 0.5,
+      "evergreen": 0.8
+    },
+    "published_date": "2025-12-05T14:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-014",
+    "category": "Sustainable Living",
+    "title": "How to Mend Your Clothes",
+    "author": "Maya Green",
+    "word_count": 1200,
+    "tags": [
+      "Fashion",
+      "DIY",
+      "Craft"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 21000,
+      "avg_read_time_seconds": 450,
+      "shares": 6000,
+      "bounce_rate": 0.15
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Sewing",
+        "Slow Fashion"
+      ],
+      "sentiment": 0.95,
+      "evergreen": 0.99
+    },
+    "published_date": "2025-02-18T08:15:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-015",
+    "category": "Sustainable Living",
+    "title": "Solar Panels: Is It Worth It?",
+    "author": "Julian Rivers",
+    "word_count": 2200,
+    "tags": [
+      "Solar",
+      "Finance",
+      "Energy"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 33000,
+      "avg_read_time_seconds": 720,
+      "shares": 1500,
+      "bounce_rate": 0.28
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Roofing",
+        "ROI"
+      ],
+      "sentiment": 0.8,
+      "evergreen": 0.9
+    },
+    "published_date": "2025-04-25T11:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-016",
+    "category": "Sustainable Living",
+    "title": "The Problems with Recycling",
+    "author": "Maya Green",
+    "word_count": 1600,
+    "tags": [
+      "Recycling",
+      "Waste",
+      "Policy"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 19000,
+      "avg_read_time_seconds": 500,
+      "shares": 2800,
+      "bounce_rate": 0.42
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Circular Economy",
+        "Incineration"
+      ],
+      "sentiment": -0.1,
+      "evergreen": 0.85
+    },
+    "published_date": "2025-08-30T10:00:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-017",
+    "category": "Sustainable Living",
+    "title": "Eco-Friendly Baby Care",
+    "author": "Maya Green",
+    "word_count": 1300,
+    "tags": [
+      "Parenting",
+      "Baby",
+      "Health"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 14500,
+      "avg_read_time_seconds": 320,
+      "shares": 3500,
+      "bounce_rate": 0.25
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Diapers",
+        "Clothing"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.9
+    },
+    "published_date": "2025-10-05T09:45:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-018",
+    "category": "Sustainable Living",
+    "title": "Biodiversity in Your Backyard",
+    "author": "Julian Rivers",
+    "word_count": 1150,
+    "tags": [
+      "Wildlife",
+      "Garden",
+      "Nature"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 8000,
+      "avg_read_time_seconds": 280,
+      "shares": 1200,
+      "bounce_rate": 0.3
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Bees",
+        "Ponds"
+      ],
+      "sentiment": 0.95,
+      "evergreen": 0.92
+    },
+    "published_date": "2025-06-08T07:30:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-019",
+    "category": "Sustainable Living",
+    "title": "Passive House Design",
+    "author": "Julian Rivers",
+    "word_count": 2500,
+    "tags": [
+      "Architecture",
+      "Energy",
+      "Design"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 5200,
+      "avg_read_time_seconds": 850,
+      "shares": 400,
+      "bounce_rate": 0.48
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Insulation",
+        "Windows"
+      ],
+      "sentiment": 0.7,
+      "evergreen": 0.95
+    },
+    "published_date": "2025-12-12T15:30:00Z"
+  },
+  {
+    "article_id": "BLOG-SUST-020",
+    "category": "Sustainable Living",
+    "title": "Composting 101",
+    "author": "Maya Green",
+    "word_count": 900,
+    "tags": [
+      "Composting",
+      "Garden",
+      "Soil"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 28000,
+      "avg_read_time_seconds": 250,
+      "shares": 7000,
+      "bounce_rate": 0.14
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Worms",
+        "Kitchen Waste"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 1.0
+    },
+    "published_date": "2025-03-25T08:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-001",
+    "category": "Digital Marketing",
+    "title": "SEO in the Age of AI",
+    "author": "Kevin Wu",
+    "word_count": 1600,
+    "tags": [
+      "SEO",
+      "Google",
+      "Content"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 32000,
+      "avg_read_time_seconds": 520,
+      "shares": 890,
+      "bounce_rate": 0.22
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Keywords",
+        "SGE"
+      ],
+      "sentiment": 0.5,
+      "evergreen": 0.6
+    },
+    "published_date": "2025-12-15T11:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-002",
+    "category": "Digital Marketing",
+    "title": "Mastering Short-Form Video",
+    "author": "Tasha Bell",
+    "word_count": 1100,
+    "tags": [
+      "TikTok",
+      "Social Media",
+      "Video"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 54000,
+      "avg_read_time_seconds": 290,
+      "shares": 15000,
+      "bounce_rate": 0.45
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Instagram",
+        "Creation"
+      ],
+      "sentiment": 0.88,
+      "evergreen": 0.4
+    },
+    "published_date": "2025-11-20T16:45:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-003",
+    "category": "Digital Marketing",
+    "title": "The Death of Third-Party Cookies",
+    "author": "Kevin Wu",
+    "word_count": 1900,
+    "tags": [
+      "Privacy",
+      "Data",
+      "Ads"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 12500,
+      "avg_read_time_seconds": 600,
+      "shares": 400,
+      "bounce_rate": 0.35
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Tracking",
+        "GDPR"
+      ],
+      "sentiment": 0.2,
+      "evergreen": 0.5
+    },
+    "published_date": "2025-10-10T10:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-004",
+    "category": "Digital Marketing",
+    "title": "Email Marketing: 2025 Trends",
+    "author": "Tasha Bell",
+    "word_count": 1200,
+    "tags": [
+      "Email",
+      "Newsletter",
+      "Retention"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 18000,
+      "avg_read_time_seconds": 320,
+      "shares": 2200,
+      "bounce_rate": 0.28
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Subject Lines",
+        "CTAs"
+      ],
+      "sentiment": 0.7,
+      "evergreen": 0.75
+    },
+    "published_date": "2025-11-05T09:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-005",
+    "category": "Digital Marketing",
+    "title": "Influencer Marketing Strategy",
+    "author": "Tasha Bell",
+    "word_count": 1400,
+    "tags": [
+      "Influencers",
+      "Social Media",
+      "PR"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 21000,
+      "avg_read_time_seconds": 400,
+      "shares": 3500,
+      "bounce_rate": 0.3
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Brand Deals",
+        "Audience"
+      ],
+      "sentiment": 0.6,
+      "evergreen": 0.5
+    },
+    "published_date": "2025-09-18T14:30:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-006",
+    "category": "Digital Marketing",
+    "title": "Conversion Rate Optimization",
+    "author": "Kevin Wu",
+    "word_count": 2100,
+    "tags": [
+      "CRO",
+      "UI/UX",
+      "Data"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 11000,
+      "avg_read_time_seconds": 650,
+      "shares": 850,
+      "bounce_rate": 0.45
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "A/B Testing",
+        "Heatmaps"
+      ],
+      "sentiment": 0.8,
+      "evergreen": 0.85
+    },
+    "published_date": "2025-08-25T11:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-007",
+    "category": "Digital Marketing",
+    "title": "Content Pillars for 2026",
+    "author": "Kevin Wu",
+    "word_count": 1000,
+    "tags": [
+      "Content",
+      "Strategy",
+      "Branding"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 15000,
+      "avg_read_time_seconds": 250,
+      "shares": 1900,
+      "bounce_rate": 0.24
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Topic clusters",
+        "Planning"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.7
+    },
+    "published_date": "2025-12-01T09:30:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-008",
+    "category": "Digital Marketing",
+    "title": "Psychology of Sales Funnels",
+    "author": "Tasha Bell",
+    "word_count": 1700,
+    "tags": [
+      "Sales",
+      "Psychology",
+      "Funnel"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 24000,
+      "avg_read_time_seconds": 580,
+      "shares": 4100,
+      "bounce_rate": 0.31
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Hooks",
+        "Lead Magnets"
+      ],
+      "sentiment": 0.85,
+      "evergreen": 0.9
+    },
+    "published_date": "2025-07-20T10:15:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-009",
+    "category": "Digital Marketing",
+    "title": "LinkedIn Personal Branding",
+    "author": "Tasha Bell",
+    "word_count": 1300,
+    "tags": [
+      "LinkedIn",
+      "Personal Brand",
+      "B2B"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 42000,
+      "avg_read_time_seconds": 310,
+      "shares": 9800,
+      "bounce_rate": 0.18
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Networking",
+        "Thought Leadership"
+      ],
+      "sentiment": 0.95,
+      "evergreen": 0.6
+    },
+    "published_date": "2025-06-12T08:45:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-010",
+    "category": "Digital Marketing",
+    "title": "Google Ads: Manual vs Smart",
+    "author": "Kevin Wu",
+    "word_count": 1550,
+    "tags": [
+      "PPC",
+      "Google Ads",
+      "Ads"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 9800,
+      "avg_read_time_seconds": 430,
+      "shares": 550,
+      "bounce_rate": 0.38
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Bidding",
+        "Campaigns"
+      ],
+      "sentiment": 0.4,
+      "evergreen": 0.4
+    },
+    "published_date": "2025-11-14T13:20:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-011",
+    "category": "Digital Marketing",
+    "title": "Affiliate Marketing Roadmap",
+    "author": "Kevin Wu",
+    "word_count": 1850,
+    "tags": [
+      "Affiliate",
+      "Income",
+      "Sales"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 38000,
+      "avg_read_time_seconds": 540,
+      "shares": 6200,
+      "bounce_rate": 0.26
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Amazon",
+        "Niches"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.85
+    },
+    "published_date": "2025-05-30T09:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-012",
+    "category": "Digital Marketing",
+    "title": "Brand Voice Guidelines",
+    "author": "Tasha Bell",
+    "word_count": 900,
+    "tags": [
+      "Branding",
+      "Copywriting",
+      "Writing"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 12000,
+      "avg_read_time_seconds": 220,
+      "shares": 2500,
+      "bounce_rate": 0.2
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Tone",
+        "Style Guide"
+      ],
+      "sentiment": 0.95,
+      "evergreen": 0.99
+    },
+    "published_date": "2025-04-05T10:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-013",
+    "category": "Digital Marketing",
+    "title": "YouTube Algorithm Secrets",
+    "author": "Tasha Bell",
+    "word_count": 2200,
+    "tags": [
+      "YouTube",
+      "Video",
+      "Engagement"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 65000,
+      "avg_read_time_seconds": 800,
+      "shares": 12000,
+      "bounce_rate": 0.45
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Thumbnails",
+        "Watch Time"
+      ],
+      "sentiment": 0.8,
+      "evergreen": 0.6
+    },
+    "published_date": "2025-08-10T16:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-014",
+    "category": "Digital Marketing",
+    "title": "Podcast Marketing for B2B",
+    "author": "Kevin Wu",
+    "word_count": 1450,
+    "tags": [
+      "Podcast",
+      "B2B",
+      "Audio"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 7200,
+      "avg_read_time_seconds": 380,
+      "shares": 900,
+      "bounce_rate": 0.32
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Sponsorship",
+        "Interviews"
+      ],
+      "sentiment": 0.75,
+      "evergreen": 0.8
+    },
+    "published_date": "2025-11-25T11:45:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-015",
+    "category": "Digital Marketing",
+    "title": "The Power of User Generated Content",
+    "author": "Tasha Bell",
+    "word_count": 1100,
+    "tags": [
+      "UGC",
+      "Community",
+      "Social"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 19000,
+      "avg_read_time_seconds": 290,
+      "shares": 4800,
+      "bounce_rate": 0.27
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Trust",
+        "Reviews"
+      ],
+      "sentiment": 0.95,
+      "evergreen": 0.7
+    },
+    "published_date": "2025-10-05T14:30:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-016",
+    "category": "Digital Marketing",
+    "title": "AI Image Generation for Ads",
+    "author": "Kevin Wu",
+    "word_count": 1300,
+    "tags": [
+      "AI",
+      "Design",
+      "Ads"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 27000,
+      "avg_read_time_seconds": 350,
+      "shares": 5200,
+      "bounce_rate": 0.33
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Midjourney",
+        "Prompting"
+      ],
+      "sentiment": 0.88,
+      "evergreen": 0.5
+    },
+    "published_date": "2025-12-10T09:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-017",
+    "category": "Digital Marketing",
+    "title": "Customer Lifecycle Marketing",
+    "author": "Tasha Bell",
+    "word_count": 2000,
+    "tags": [
+      "Lifecycle",
+      "Data",
+      "Retention"
+    ],
+    "difficulty_level": "Advanced",
+    "metrics": {
+      "views": 8500,
+      "avg_read_time_seconds": 680,
+      "shares": 1100,
+      "bounce_rate": 0.4
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Churn",
+        "LTV"
+      ],
+      "sentiment": 0.6,
+      "evergreen": 0.9
+    },
+    "published_date": "2025-06-30T10:30:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-018",
+    "category": "Digital Marketing",
+    "title": "Community Building on Discord",
+    "author": "Kevin Wu",
+    "word_count": 1600,
+    "tags": [
+      "Discord",
+      "Community",
+      "Web3"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 13000,
+      "avg_read_time_seconds": 420,
+      "shares": 2100,
+      "bounce_rate": 0.35
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Moderation",
+        "Engagement"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.6
+    },
+    "published_date": "2025-07-15T15:00:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-019",
+    "category": "Digital Marketing",
+    "title": "Voice Search Optimization",
+    "author": "Kevin Wu",
+    "word_count": 1400,
+    "tags": [
+      "SEO",
+      "Voice Search",
+      "Mobile"
+    ],
+    "difficulty_level": "Intermediate",
+    "metrics": {
+      "views": 10500,
+      "avg_read_time_seconds": 370,
+      "shares": 750,
+      "bounce_rate": 0.29
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Alexa",
+        "Siri"
+      ],
+      "sentiment": 0.7,
+      "evergreen": 0.7
+    },
+    "published_date": "2025-09-02T13:15:00Z"
+  },
+  {
+    "article_id": "BLOG-MARK-020",
+    "category": "Digital Marketing",
+    "title": "Viral Marketing Case Studies",
+    "author": "Tasha Bell",
+    "word_count": 2600,
+    "tags": [
+      "Viral",
+      "Case Study",
+      "Social"
+    ],
+    "difficulty_level": "Beginner",
+    "metrics": {
+      "views": 75000,
+      "avg_read_time_seconds": 950,
+      "shares": 25000,
+      "bounce_rate": 0.5
+    },
+    "recommendation_data": {
+      "related_topics": [
+        "Psychology",
+        "Hooks"
+      ],
+      "sentiment": 0.9,
+      "evergreen": 0.3
+    },
+    "published_date": "2025-03-12T08:00:00Z"
+  }
+]
