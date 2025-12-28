@@ -110,7 +110,12 @@ export class ProductSearchWorkflow implements IWorkflow {
     }
     evalStep.addArtifact(
       ARTIFACT_LABELS.RELEVANCE_SCORES,
-      scoredItems.map((s) => ({ title: s.title, score: s.relevanceScore }))
+      scoredItems.map((s) => ({
+        asin: s.asin,
+        title: s.title,
+        score: s.relevanceScore,
+        reasoning: s.matchReasoning,
+      }))
     );
     evalStep.setOutput({ scoredItems });
     xray.endStep(evalStep);
