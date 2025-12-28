@@ -17,7 +17,7 @@ export class XRayService {
   // Synchronous/Blocking run for simpler UI handling
   async run(userInput: string): Promise<string> {
     const xray = new XRay();
-    xray.startExecution("Dynamic Product Search", {
+    xray.startExecution(userInput, {
       originalRequest: userInput,
     });
 
