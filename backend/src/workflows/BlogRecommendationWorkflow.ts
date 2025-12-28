@@ -19,9 +19,17 @@ export class BlogRecommendationWorkflow implements IWorkflow {
     this.blogsData = JSON.parse(fs.readFileSync(blogsPath, "utf-8"));
   }
 
+  /**
+   * Executes the blog recommendation workflow.
+   * 1. Extracts topics from user request.
+   * 2. Searches blogs by tag matching.
+   * 3. Applies dynamic filtering.
+   * 4. Ranks by sentiment and views.
+   */
   async run(userInput: string, xray: XRay): Promise<void> {
     console.info("[BlogRecommendationWorkflow] run() start...", userInput);
-    // 1. Generation
+
+    // Generation
     const genStep = xray.startStep(STEP_NAMES.GENERATION, "generation", {
       userInput,
     });
@@ -40,7 +48,7 @@ export class BlogRecommendationWorkflow implements IWorkflow {
     xray.endStep(genStep);
     xray.saveState();
 
-    // 2. Search (Tag Matching)
+    // Search (Tag Matching)
     const searchStep = xray.startStep(STEP_NAMES.SEARCH, "search", {
       topics: genResult.topics,
     });
@@ -64,12 +72,11 @@ export class BlogRecommendationWorkflow implements IWorkflow {
 
     if (searchResults.length === 0) return;
 
-    // 3. Filter (Dynamic)
+    // Filter (Dynamic)
     const filterStep = xray.startStep(STEP_NAMES.FILTER, "apply_filter", {
       count: searchResults.length,
     });
 
-    // Use Schema-Agnostic Filter Service
     const filteredResults = await this.filterService.applyFilter(
       filterStep,
       searchResults,
@@ -81,7 +88,7 @@ export class BlogRecommendationWorkflow implements IWorkflow {
 
     if (filteredResults.length === 0) return;
 
-    // 4. Ranking (Sentiment & Views)
+    // Ranking (Sentiment & Views)
     const rankStep = xray.startStep(STEP_NAMES.RANKING, "ranking", {
       strategy: "Sentiment * Views",
     });

@@ -6,10 +6,22 @@ interface Props {
   evaluations: Evaluation[];
 }
 
+/**
+ * Component responsible for rendering various artifact types.
+ * Supports:
+ * - Prompt Analysis (Chips)
+ * - Raw Search Results (Highlighted List)
+ * - Candidate Evaluations (Table)
+ * - Relevance Scores (Table)
+ * - Ranked Results (Table)
+ * - General/Fallback JSON view
+ */
 export function ArtifactTable({ artifacts, evaluations }: Props) {
   const evalMap = Object.fromEntries(evaluations.map((e) => [e.artifactId, e]));
 
-  // Helper for highlighting specific keywords in text
+  /**
+   * Helper component to highlight matched keywords within a text string.
+   */
   const HighlightText = ({
     text,
     keywords,

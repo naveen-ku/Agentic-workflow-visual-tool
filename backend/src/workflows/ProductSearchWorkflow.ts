@@ -19,9 +19,18 @@ export class ProductSearchWorkflow implements IWorkflow {
     this.productsData = JSON.parse(fs.readFileSync(productsPath, "utf-8"));
   }
 
+  /**
+   * Executes the product search workflow.
+   * 1. Generates keywords from user input.
+   * 2. Searches the local product database.
+   * 3. Applies strict, schema-agnostic filtering.
+   * 4. Evaluates semantic relevance with LLM.
+   * 5. Ranks results.
+   */
   async run(userInput: string, xray: XRay): Promise<void> {
     console.info("[ProductSearchWorkflow] run() start...", userInput);
-    // 1. Generation Step
+
+    // Generation Step
     const genStep = xray.startStep(STEP_NAMES.GENERATION, "generation", {
       userInput,
     });
@@ -39,7 +48,7 @@ export class ProductSearchWorkflow implements IWorkflow {
     xray.endStep(genStep);
     xray.saveState();
 
-    // 2. Search Step
+    // Search Step
     const searchStep = xray.startStep(STEP_NAMES.SEARCH, "search", {
       keywords: genResult.keywords,
     });
@@ -49,7 +58,7 @@ export class ProductSearchWorkflow implements IWorkflow {
       ARTIFACT_LABELS.RAW_SEARCH_RESULTS,
       {
         count: searchResults.length,
-        results: searchResults.slice(0, 50), // Cap at 50 for display
+        results: searchResults.slice(0, 50),
         keywords: genResult.keywords,
       }
     );
@@ -67,16 +76,13 @@ export class ProductSearchWorkflow implements IWorkflow {
     xray.endStep(searchStep);
     xray.saveState();
 
-    if (searchResults.length === 0) {
-      return;
-    }
+    if (searchResults.length === 0) return;
 
-    // 3. Filter Step (Dynamic)
+    // Filter Step
     const filterStep = xray.startStep(STEP_NAMES.FILTER, "apply_filter", {
       itemCount: searchResults.length,
     });
 
-    // Use Schema-Agnostic Filter Service
     const filteredResults = await this.filterService.applyFilter(
       filterStep,
       searchResults,
@@ -87,13 +93,9 @@ export class ProductSearchWorkflow implements IWorkflow {
     xray.endStep(filterStep);
     xray.saveState();
 
-    if (filteredResults.length === 0) {
-      // STOP EXECUTION - Honest Debugging
-      // Do not proceed with fallback
-      return;
-    }
+    if (filteredResults.length === 0) return;
 
-    // 4. Relevance Step
+    // Relevance Step
     const evalStep = xray.startStep(
       STEP_NAMES.RELEVANCE,
       "llm_relevance_evaluation",
@@ -125,7 +127,7 @@ export class ProductSearchWorkflow implements IWorkflow {
     xray.endStep(evalStep);
     xray.saveState();
 
-    // 5. Ranking Step
+    // Ranking Step
     const rankStep = xray.startStep(STEP_NAMES.RANKING, "ranking", {
       strategy: "AI Relevance Score",
     });
@@ -133,7 +135,7 @@ export class ProductSearchWorkflow implements IWorkflow {
       (a, b) => b.relevanceScore - a.relevanceScore
     );
     rankStep.addArtifact(ARTIFACT_LABELS.TOP_PICK, rankedItems[0]);
-    // Add Table for full ranking
+
     rankStep.addArtifact(ARTIFACT_LABELS.RANKED_RESULTS, {
       items: rankedItems.map((item, idx) => ({
         rank: idx + 1,
@@ -143,9 +145,11 @@ export class ProductSearchWorkflow implements IWorkflow {
     rankStep.setOutput({ rankedItems });
     xray.endStep(rankStep);
     xray.saveState();
-    console.info("[ProductSearchWorkflow] run() end...");
   }
 
+  /**
+   * Performs a simple keyword match against title and category details.
+   */
   private performSearch(keywords: string[]): any[] {
     console.info("[ProductSearchWorkflow] performSearch() start...", keywords);
     return this.productsData.filter((p) => {

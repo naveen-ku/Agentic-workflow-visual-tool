@@ -7,6 +7,10 @@ interface Props {
   onSelect: (id: string) => void;
 }
 
+/**
+ * Sidebar component displaying the history of executions.
+ * Highlights the currently selected execution and indicates 'Pending' status.
+ */
 export function ExecutionList({ executions, selectedId, onSelect }: Props) {
   return (
     <div className="w-72 border-r bg-gray-50 overflow-y-auto">

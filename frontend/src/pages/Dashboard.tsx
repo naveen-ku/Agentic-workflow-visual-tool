@@ -11,6 +11,11 @@ import { ExecutionDetail } from "../features/executions/ExecutionDetail";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { UI_LABELS } from "../constants/ui";
 
+/**
+ * Main dashboard component.
+ * Displays the list of executions (sidebar) and the selected execution details.
+ * Handles starting new executions and subscribing to live SSE updates.
+ */
 export function Dashboard() {
   const dispatch = useAppDispatch();
   const { executions, selected, loading } = useAppSelector(

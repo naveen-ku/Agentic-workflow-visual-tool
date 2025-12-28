@@ -14,23 +14,36 @@ const initialState: ExecutionState = {
   loading: false,
 };
 
+/**
+ * Fetches the list of all historical executions.
+ */
 export const loadExecutions = createAsyncThunk(
   "executions/load",
   fetchExecutions
 );
 
+/**
+ * Fetches detailed data for a single execution by ID.
+ * This includes all steps, artifacts, and evaluations.
+ */
 export const loadExecutionById = createAsyncThunk(
   "executions/loadById",
   fetchExecutionById
 );
 
+/**
+ * Initiates a new AI workflow execution.
+ * 1. Calls API to create execution (async).
+ * 2. Refreshes the execution list.
+ * 3. Selects the new execution.
+ */
 export const startNewExecution = createAsyncThunk(
   "executions/startNew",
   async (userInput: string, { dispatch }) => {
     const { createExecution } = await import("../api/xrayApi");
     const result = await createExecution(userInput);
-    dispatch(loadExecutions()); // Refresh list
-    dispatch(loadExecutionById(result.executionId)); // Select new one
+    dispatch(loadExecutions());
+    dispatch(loadExecutionById(result.executionId));
     return result;
   }
 );
@@ -39,6 +52,10 @@ const executionSlice = createSlice({
   name: "executions",
   initialState,
   reducers: {
+    /**
+     * Merges a live update (from SSE) into the store.
+     * Updates both the list item and the currently selected execution if matches.
+     */
     updateExecution(state, action: { payload: Execution }) {
       const updated = action.payload;
       if (state.selected?.executionId === updated.executionId) {
@@ -65,7 +82,6 @@ const executionSlice = createSlice({
       })
       .addCase(loadExecutionById.fulfilled, (state, action) => {
         state.selected = action.payload;
-        // Update the item in the list as well if it exists
         const index = state.executions.findIndex(
           (e) => e.executionId === action.payload.executionId
         );

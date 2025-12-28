@@ -2,8 +2,10 @@ import type { Step } from "../../types/xray";
 import { ArtifactTable } from "./ArtifactTable";
 import { UI_LABELS } from "../../constants/ui";
 
-// ...
-
+/**
+ * Renders the details of a single execution step.
+ * Shows Input, Output, Reasoning, and Artifacts in collapsible sections.
+ */
 export function StepDetail({ step }: { step: Step }) {
   return (
     <div className="flex-1 p-6 overflow-y-auto">

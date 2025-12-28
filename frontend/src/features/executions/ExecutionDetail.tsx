@@ -3,6 +3,11 @@ import { StepDetail } from "./StepDetail";
 import { useState } from "react";
 import type { Execution } from "../../types/xray";
 
+/**
+ * Main detailed view of a selected execution.
+ * Manages the state of the selected *Step* within the execution.
+ * Renders the timeline (left) and the step details (right).
+ */
 export function ExecutionDetail({ execution }: { execution: Execution }) {
   const steps = execution.steps || [];
   const [selectedStepId, setSelectedStepId] = useState(steps[0]?.stepId);

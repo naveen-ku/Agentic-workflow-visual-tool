@@ -14,6 +14,11 @@ export class DynamicFilterService {
    * 1. Infers schema from the first item.
    * 2. Asks LLM to generate filter rules based on schema + user input.
    * 3. Applies rules and records detailed evaluations.
+   *
+   * @param step - The current XRay step for artifact recording.
+   * @param items - The list of data items to filter.
+   * @param userInput - The user's specific query.
+   * @returns The filtered subset of items.
    */
   async applyFilter(
     step: XRayStep,
@@ -22,12 +27,9 @@ export class DynamicFilterService {
   ): Promise<any[]> {
     if (!items || items.length === 0) return [];
 
-    // 1. Calculate Stats (Schema + Range)
     const schema = this.calculateStats(items);
-    console.info("[DynamicFilterService] infered Stats: ", schema);
-
-    // 2. Generate Rules using LLM
     const prompt = PROMPTS.DYNAMIC_FILTER(userInput, items.length, schema);
+
     const filterSpec = await this.openai.generateJson<{
       rules: Array<{
         field: string;
@@ -36,11 +38,9 @@ export class DynamicFilterService {
       }>;
       reasoning: string;
     }>(prompt);
-    console.info("[DynamicFilterService] filterSpec: ", filterSpec);
 
     step.setReasoning(filterSpec.reasoning);
 
-    // 3. Evaluate each item against rules
     const candidateEvaluations = items.map((item) => {
       const evaluationRules: Record<string, any> = {};
       let allPassed = true;
@@ -59,19 +59,17 @@ export class DynamicFilterService {
         if (!passed) allPassed = false;
       }
 
-      // If no rules were generated, everything passes
       if (filterSpec.rules.length === 0) allPassed = true;
 
       return {
-        item: item.title || item.name || "Item", // Best-guess label
-        ...this.extractMetrics(item, schema), // Include metrics for display
+        item: item.title || item.name || "Item",
+        ...this.extractMetrics(item, schema),
         rules: evaluationRules,
         qualified: allPassed,
         originalItem: item,
       };
     });
 
-    // 4. Record Artifacts
     const filteredResults = candidateEvaluations
       .filter((c) => c.qualified)
       .map((c) => c.originalItem);
@@ -102,12 +100,14 @@ export class DynamicFilterService {
     return filteredResults;
   }
 
+  /**
+   * Infers the schema types and ranges/enums from a dataset.
+   */
   private calculateStats(items: any[]): Record<string, string> {
     if (items.length === 0) return {};
     const schema: Record<string, string> = {};
     const sample = items[0];
 
-    // Helper to flatten keys
     const flatten = (obj: any, prefix = ""): string[] => {
       let keys: string[] = [];
       for (const key in obj) {
@@ -148,10 +148,16 @@ export class DynamicFilterService {
     return schema;
   }
 
+  /**
+   * Safely retrieves a nested property value from an object using dot notation.
+   */
   private getNestedValue(obj: any, path: string): any {
     return path.split(".").reduce((o, key) => (o ? o[key] : undefined), obj);
   }
 
+  /**
+   * Evaluates a single filter rule against a value.
+   */
   private evaluateRule(actual: any, operator: string, target: any): boolean {
     if (actual === undefined || actual === null) return false;
     switch (operator) {
@@ -176,15 +182,15 @@ export class DynamicFilterService {
     }
   }
 
+  /**
+   * Extracts relevant metrics from an item for display in the UI.
+   */
   private extractMetrics(item: any, schema: Record<string, string>): any {
     const metrics: any = {};
-    // Extract top-level numbers/strings for display context
-    // This is heuristic; in a real app, we might want explicit display config
     for (const key in item) {
       if (typeof item[key] === "number") metrics[key] = item[key];
-      if (key === "difficulty_level") metrics[key] = item[key]; // Spec for blog
+      if (key === "difficulty_level") metrics[key] = item[key];
     }
-    // Also grab nested metrics if they exist
     if (item.metrics) {
       Object.assign(metrics, item.metrics);
     }

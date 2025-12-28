@@ -10,6 +10,11 @@ export class XRay {
 
   constructor(private readonly store = executionStore) {}
 
+  /**
+   * Starts a new execution session with a unique ID.
+   * @param name - Human-readable name for the execution (e.g. user input).
+   * @param metadata - Optional metadata.
+   */
   startExecution(name: string, metadata?: Record<string, any>) {
     console.info("[XRay] startExecution() start... ", name);
     this.execution = {
@@ -23,7 +28,9 @@ export class XRay {
     console.info("[XRay] startExecution() end... ");
   }
 
-  // Helper to mark running (e.g. when first step starts)
+  /**
+   * Manually updates the execution status and persists state.
+   */
   setStatus(status: "pending" | "running" | "completed" | "failed") {
     if (this.execution) {
       this.execution.status = status;
@@ -31,6 +38,10 @@ export class XRay {
     }
   }
 
+  /**
+   * Starts a new logical step within the execution.
+   * Automatically transitions status to 'running' if it was 'pending'.
+   */
   startStep(name: string, type: StepType, input: any): XRayStep {
     console.info("[XRay] startStep() start... ", name, " , ", type);
     if (!this.execution) {
@@ -44,6 +55,9 @@ export class XRay {
     return new XRayStep(name, type, input);
   }
 
+  /**
+   * Compltes a step and appends it to the execution history.
+   */
   endStep(step: XRayStep) {
     console.info(
       "[XRay] endStep() start... ",
@@ -58,12 +72,14 @@ export class XRay {
     console.info("[XRay] endStep() end... ");
   }
 
+  /**
+   * Finalizes the execution, setting the end timestamp and status.
+   */
   endExecution() {
     console.info("[XRay] endExecution() start... ");
     if (!this.execution) return;
 
     this.execution.endedAt = Date.now();
-    // Only mark completed if not already failed
     if (this.execution.status !== "failed") {
       this.execution.status = "completed";
     }
@@ -72,6 +88,9 @@ export class XRay {
     console.info("[XRay] endExecution() end... ");
   }
 
+  /**
+   * Marks the execution as failed.
+   */
   failExecution(error: string) {
     if (this.execution) {
       this.execution.status = "failed";

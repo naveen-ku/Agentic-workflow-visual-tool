@@ -21,6 +21,9 @@ export class OpenAIService {
     return OpenAIService.instance;
   }
 
+  /**
+   * Generates a plain text response from OpenAI.
+   */
   async generate(
     prompt: string,
     model: string = "gpt-4-turbo"
@@ -39,6 +42,10 @@ export class OpenAIService {
     }
   }
 
+  /**
+   * Generates a structural JSON response from OpenAI.
+   * Enforces JSON mode key in the prompt or system message.
+   */
   async generateJson<T>(
     prompt: string,
     model: string = "gpt-4-turbo"

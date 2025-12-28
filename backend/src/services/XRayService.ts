@@ -12,15 +12,20 @@ export class XRayService {
     this.openai = OpenAIService.getInstance();
   }
 
+  /**
+   * Starts a new execution session asynchronously.
+   * Initializes the X-Ray context and saves the initial state.
+   *
+   * @param userInput - The natural language request from the user.
+   * @returns The unique ID of the newly created execution.
+   */
   async startExecution(userInput: string): Promise<string> {
-    console.info("[XRayService] startExecution() ... ", userInput);
     const xray = new XRay();
     xray.startExecution(userInput, {
       originalRequest: userInput,
     });
-    xray.saveState(); // Saved with ID
+    xray.saveState();
 
-    // Run the rest in background
     this.runWorkflow(xray, userInput).catch((err) => {
       console.error("Background workflow failed", err);
     });
@@ -28,9 +33,16 @@ export class XRayService {
     return xray.getExecutionId() || "";
   }
 
-  // Private method to run the actual logic
+  /**
+   * Orchestrates the entire workflow based on user intent.
+   * 1. Classifies intent (Product vs Blog).
+   * 2. Instantiates the appropriate workflow strategy.
+   * 3. Executes the workflow.
+   *
+   * @param xray - The XRay execution context.
+   * @param userInput - The original user request.
+   */
   private async runWorkflow(xray: XRay, userInput: string): Promise<void> {
-    console.info("[XRayService] runWorkflow() background start...");
     try {
       const routerStep = xray.startStep("Intent Classification", "custom", {
         userInput,
@@ -49,31 +61,24 @@ export class XRayService {
 
       let workflow: IWorkflow;
       if (routerResult.workflow === "BLOG_RECOMMENDATION") {
-        console.info(
-          "[XRayService] Router selected: BlogRecommendationWorkflow"
-        );
         workflow = new BlogRecommendationWorkflow();
       } else {
-        console.info("[XRayService] Router selected: ProductSearchWorkflow");
         workflow = new ProductSearchWorkflow(); // Default
       }
 
-      // Execute Workflow
       await workflow.run(userInput, xray);
     } catch (e: any) {
       console.error("XRay Execution Failed", e);
-      // Ensure we log failure if the workflow itself didn't catch it
       const errorStep = xray.startStep("Execution Failed", "custom", {
         error: e.message,
       });
       xray.endStep(errorStep);
-      xray.failExecution(e.message); // Mark failed
+      xray.failExecution(e.message);
       xray.saveState();
     } finally {
       xray.endExecution();
       xray.saveState();
     }
-    console.info("[XRayService] runWorkflow() background end... ");
   }
 }
 

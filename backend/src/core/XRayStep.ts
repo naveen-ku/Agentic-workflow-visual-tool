@@ -27,6 +27,11 @@ export class XRayStep {
     return this.step.type;
   }
 
+  /**
+   * Records an artifact (intermediate result) for this step.
+   * @param label - Human-readable label for the artifact.
+   * @param data - The content of the artifact.
+   */
   addArtifact(label: string, data: any): string {
     const artifact: Artifact = {
       artifactId: uuidv4(),
@@ -37,6 +42,9 @@ export class XRayStep {
     return artifact.artifactId;
   }
 
+  /**
+   * Records an evaluation result for a specific artifact.
+   */
   evaluateArtifact(artifactId: string, criteriaResults: CriterionResult[]) {
     const qualified = criteriaResults.every((c) => c.passed);
 
@@ -57,6 +65,9 @@ export class XRayStep {
     this.step.reasoning = reasoning;
   }
 
+  /**
+   * Finalizes the step by setting the end time.
+   */
   end(): Step {
     this.step.endedAt = Date.now();
     return this.step;
